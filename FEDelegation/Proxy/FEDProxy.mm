@@ -10,6 +10,7 @@
 #import "FEDUtils.h"
 #import "RTMethod.h"
 #import "RTProtocol.h"
+#import "RTProtocol+FEDAdditions.h"
 #import <unordered_map>
 #import <unordered_set>
 
@@ -37,7 +38,7 @@
     
     RTProtocol *protocol = [RTProtocol protocolWithObjCProtocol:objcProtocol];
     NSMutableArray *protocols = [NSMutableArray arrayWithObject:protocol];
-    [protocols addObjectsFromArray:[protocol incorporatedProtocols]];
+    [protocols addObjectsFromArray:[protocol recursivelyIncorporatedProtocols]];
     NSMutableArray *requiredMethods = [NSMutableArray array];
     NSMutableArray *optionalMethods = [NSMutableArray array];
     for (RTProtocol *protocol in protocols) {
