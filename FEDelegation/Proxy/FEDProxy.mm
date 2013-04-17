@@ -8,27 +8,78 @@
 
 #import "FEDProxy.h"
 #import "FEDUtils.h"
+#import "MARTNSObject.h"
 #import "RTMethod.h"
 #import "RTProtocol.h"
 #import "RTProtocol+FEDAdditions.h"
 #import <unordered_map>
 #import <unordered_set>
 
-@implementation FEDProxy{
-    __weak id _delegate;
-    Protocol *_protocol;
-    std::unordered_map<SEL,id> _signatures;
+#define FEDPROXY_IVARS \
+    __weak id _delegate; \
+    Protocol *_protocol; \
+    std::unordered_map<SEL,id> _signatures; \
     std::unordered_set<SEL> _delegateSelectors;
+
+#if __IPHONE_OS_VERSION_MIN_REQUIRED < 60000
+#define FED_USE_IOS5_CLASS_REPLACEMENT_HACK 1
+@interface FEDProxy_IOS5 : NSObject
+@end
+@implementation FEDProxy_IOS5{
+    FEDPROXY_IVARS
+}
++(void)initialize{
+    unsigned int count;
+    Method *objCMethods = class_copyMethodList([FEDProxy class], &count);
+    NSMutableArray *methods = [NSMutableArray array];
+    for(unsigned i = 0; i < count; i++){
+        [methods addObject: [RTMethod methodWithObjCMethod: objCMethods[i]]];
+    }
+    free(objCMethods);
+    for (RTMethod *method in methods) {
+        [self rt_addMethod:method];
+    }
+}
+@end
+#endif
+
+@implementation FEDProxy{
+    FEDPROXY_IVARS
 }
 
 #pragma mark - Init
 +(Class)proxyClass{
+#ifdef FED_USE_IOS5_CLASS_REPLACEMENT_HACK
+    static Class proxyClass;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        // On iOS5 we need to check if proxy is compatible with weak references.
+        // If no then our proxy will be inherited from NSObject instead of NSProxy.
+        // See bug in iOS 5: http://stackoverflow.com/questions/13800136/nsproxy-weak-reference-bug-under-arc-on-ios-5
+        id proxy = [NSProxy alloc];
+        __weak id weakProxy = proxy;
+        id strongProxy = weakProxy;
+        if (strongProxy) {
+            proxyClass = self;
+        }else{
+            proxyClass = [FEDProxy_IOS5 class];
+        }
+    });
+    return proxyClass;
+#else
     return self;
+#endif
 }
 
 +(id)proxyWithDelegate:(id)delegate protocol:(Protocol *)protocol{
-    FEDProxy *proxy = [[[self proxyClass] alloc] fed_initWithDelegate:delegate
-                                                             protocol:protocol];
+    FEDProxy *proxy = [[self proxyClass] alloc];
+#ifdef FED_USE_IOS5_CLASS_REPLACEMENT_HACK
+    if ([self proxyClass] == [FEDProxy_IOS5 class]) {
+        proxy = [(id)proxy init];
+    }
+#endif
+    [proxy fed_initWithDelegate:delegate
+                       protocol:protocol];
     return proxy;
 }
 
