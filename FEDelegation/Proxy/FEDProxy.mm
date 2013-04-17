@@ -31,19 +31,34 @@
     return proxy;
 }
 
--(id)fed_initWithDelegate:(id)delegate protocol:(Protocol *)protocol{
+-(id)fed_initWithDelegate:(id)delegate protocol:(Protocol *)objcProtocol{
     _delegate = delegate;
-    _protocol = protocol;
-    NSArray *methods = [FEDUtils instanceMethodsInProtocol:protocol withAdopted:YES];
-    for (RTMethod *method in methods){
+    _protocol = objcProtocol;
+    
+    RTProtocol *protocol = [RTProtocol protocolWithObjCProtocol:objcProtocol];
+    NSMutableArray *protocols = [NSMutableArray arrayWithObject:protocol];
+    [protocols addObjectsFromArray:[protocol incorporatedProtocols]];
+    NSMutableArray *requiredMethods = [NSMutableArray array];
+    NSMutableArray *optionalMethods = [NSMutableArray array];
+    for (RTProtocol *protocol in protocols) {
+        [optionalMethods addObjectsFromArray:[protocol methodsRequired:NO instance:YES]];
+        [requiredMethods addObjectsFromArray:[protocol methodsRequired:YES instance:YES]];
+    }
+    NSMutableArray *allMethods = [NSMutableArray arrayWithArray:requiredMethods];
+    [allMethods addObjectsFromArray:optionalMethods];
+    for (RTMethod *method in requiredMethods){
+        _delegateSelectors.insert(method.selector);
+    }
+    for (RTMethod *method in optionalMethods){
         SEL selector = method.selector;
-        
         if ([_delegate respondsToSelector:selector]) {
             _delegateSelectors.insert(selector);
         }
+    }
+    for (RTMethod *method in allMethods){
         const char *types = [method.signature
                              cStringUsingEncoding:NSUTF8StringEncoding];
-        _signatures[selector] = [NSMethodSignature signatureWithObjCTypes:types];
+        _signatures[method.selector] = [NSMethodSignature signatureWithObjCTypes:types];
     }
     return self;
 }
