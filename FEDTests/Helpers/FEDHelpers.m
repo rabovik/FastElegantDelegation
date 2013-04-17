@@ -13,6 +13,14 @@
 
 -(void)requiredMethod{};
 
+-(int)requiredMethodReturns13{
+    return 13;
+}
+
+-(int)parentOptionalMethodReturns42{
+    return 42;
+}
+
 @end
 
 @implementation FEDExampleDelegator{
@@ -25,11 +33,11 @@
 }
 
 -(void)requiredMethod{
-    
+    [self.delegate requiredMethod];
 }
 
 -(void)methodWithArgument:(id)arg{
-    
+    [self.delegate methodWithArgument:arg];
 }
 
 @end

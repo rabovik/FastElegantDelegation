@@ -10,7 +10,7 @@
 
 @interface FEDProxyTests ()
 @property (nonatomic,strong) FEDExampleDelegate *delegate;
-@property (nonatomic,strong) FEDProxy *proxy;
+@property (nonatomic,strong) id proxy;
 @property (nonatomic,strong) FEDExampleDelegator *delegator;
 @end
 
@@ -73,5 +73,21 @@
 }
 
 #pragma mark - Delegation
+-(void)testRequiredImplementedMethod{
+    STAssertTrue(13 == [self.proxy requiredMethodReturns13], @"");
+}
+
+-(void)testOptionalImplementedMethod{
+    STAssertTrue(42 == [self.proxy parentOptionalMethodReturns42], @"");
+}
+
+-(void)testNotImplementedMethods{
+    id proxy = [FEDProxy proxyWithDelegate:[NSObject new]
+                                  protocol:@protocol(FEDExampleProtocolWithNotExistentMethods)];
+    STAssertThrows([proxy requiredNotImplementedMethod], @"");
+    STAssertNoThrow([proxy optionalNotImplementedMethod], @"");
+    // test method not present in protocol
+    STAssertThrows([proxy testNotImplementedMethods], @"");
+}
 
 @end
