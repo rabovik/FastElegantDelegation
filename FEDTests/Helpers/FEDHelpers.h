@@ -9,8 +9,8 @@
 #import <Foundation/Foundation.h>
 
 @protocol FEDExampleProtocol <NSObject>
-@optional
 -(void)method;
+@optional
 -(void)methodWithArgument:(id)arg;
 -(void)methodWithFloat:(float)floatArg;
 @end

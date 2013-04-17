@@ -23,8 +23,11 @@
 }
 
 -(void)testMethodSignatures{
-    NSMethodSignature *sig = [self.proxy methodSignatureForSelector:@selector(method)];
-    NSLog(@"%@",sig);
+    SEL selector = @selector(method);
+    NSMethodSignature *delegateSignature =
+        [self.delegate methodSignatureForSelector:selector];
+    NSMethodSignature *proxySignature = [self.proxy methodSignatureForSelector:selector];
+    STAssertEqualObjects(delegateSignature, proxySignature, @"");
 }
 
 @end

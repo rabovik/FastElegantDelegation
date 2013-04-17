@@ -9,4 +9,7 @@
 #import "FEDHelpers.h"
 
 @implementation FEDExampleDelegate
+
+-(void)method{};
+
 @end
