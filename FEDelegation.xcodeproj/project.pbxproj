@@ -16,6 +16,12 @@
 		1AE8CEA5171E947F00743023 /* FEDUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AE8CEA4171E947F00743023 /* FEDUtils.m */; };
 		1AE8CEAC171E956600743023 /* FEDProxyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AE8CEAB171E956600743023 /* FEDProxyTests.m */; };
 		1AE8CEB2171E969E00743023 /* FEDHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AE8CEB1171E969D00743023 /* FEDHelpers.m */; };
+		1AE8CEC1171EA30900743023 /* MARTNSObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AE8CEB6171EA30900743023 /* MARTNSObject.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		1AE8CEC2171EA30900743023 /* RTIvar.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AE8CEB8171EA30900743023 /* RTIvar.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		1AE8CEC3171EA30900743023 /* RTMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AE8CEBA171EA30900743023 /* RTMethod.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		1AE8CEC4171EA30900743023 /* RTProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AE8CEBC171EA30900743023 /* RTProperty.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		1AE8CEC5171EA30900743023 /* RTProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AE8CEBE171EA30900743023 /* RTProtocol.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		1AE8CEC6171EA30900743023 /* RTUnregisteredClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AE8CEC0171EA30900743023 /* RTUnregisteredClass.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +44,18 @@
 		1AE8CEAB171E956600743023 /* FEDProxyTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FEDProxyTests.m; path = Proxy/FEDProxyTests.m; sourceTree = "<group>"; };
 		1AE8CEB0171E969D00743023 /* FEDHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FEDHelpers.h; path = Helpers/FEDHelpers.h; sourceTree = "<group>"; };
 		1AE8CEB1171E969D00743023 /* FEDHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FEDHelpers.m; path = Helpers/FEDHelpers.m; sourceTree = "<group>"; };
+		1AE8CEB5171EA30900743023 /* MARTNSObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MARTNSObject.h; path = Support/MAObjCRuntime/MARTNSObject.h; sourceTree = "<group>"; };
+		1AE8CEB6171EA30900743023 /* MARTNSObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MARTNSObject.m; path = Support/MAObjCRuntime/MARTNSObject.m; sourceTree = "<group>"; };
+		1AE8CEB7171EA30900743023 /* RTIvar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RTIvar.h; path = Support/MAObjCRuntime/RTIvar.h; sourceTree = "<group>"; };
+		1AE8CEB8171EA30900743023 /* RTIvar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RTIvar.m; path = Support/MAObjCRuntime/RTIvar.m; sourceTree = "<group>"; };
+		1AE8CEB9171EA30900743023 /* RTMethod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RTMethod.h; path = Support/MAObjCRuntime/RTMethod.h; sourceTree = "<group>"; };
+		1AE8CEBA171EA30900743023 /* RTMethod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RTMethod.m; path = Support/MAObjCRuntime/RTMethod.m; sourceTree = "<group>"; };
+		1AE8CEBB171EA30900743023 /* RTProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RTProperty.h; path = Support/MAObjCRuntime/RTProperty.h; sourceTree = "<group>"; };
+		1AE8CEBC171EA30900743023 /* RTProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RTProperty.m; path = Support/MAObjCRuntime/RTProperty.m; sourceTree = "<group>"; };
+		1AE8CEBD171EA30900743023 /* RTProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RTProtocol.h; path = Support/MAObjCRuntime/RTProtocol.h; sourceTree = "<group>"; };
+		1AE8CEBE171EA30900743023 /* RTProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RTProtocol.m; path = Support/MAObjCRuntime/RTProtocol.m; sourceTree = "<group>"; };
+		1AE8CEBF171EA30900743023 /* RTUnregisteredClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RTUnregisteredClass.h; path = Support/MAObjCRuntime/RTUnregisteredClass.h; sourceTree = "<group>"; };
+		1AE8CEC0171EA30900743023 /* RTUnregisteredClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RTUnregisteredClass.m; path = Support/MAObjCRuntime/RTUnregisteredClass.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +77,7 @@
 			children = (
 				1AE8CE57171E8DD100743023 /* FEDelegation */,
 				1AE8CE8F171E8E9400743023 /* FEDTests */,
+				1AE8CEB3171EA04200743023 /* Support */,
 				1AE8CE50171E8DD100743023 /* Frameworks */,
 				1AE8CE4F171E8DD100743023 /* Products */,
 			);
@@ -159,6 +178,33 @@
 			name = Common;
 			sourceTree = "<group>";
 		};
+		1AE8CEB3171EA04200743023 /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				1AE8CEB4171EA2F200743023 /* MAObjCRuntime */,
+			);
+			name = Support;
+			sourceTree = "<group>";
+		};
+		1AE8CEB4171EA2F200743023 /* MAObjCRuntime */ = {
+			isa = PBXGroup;
+			children = (
+				1AE8CEB5171EA30900743023 /* MARTNSObject.h */,
+				1AE8CEB6171EA30900743023 /* MARTNSObject.m */,
+				1AE8CEB7171EA30900743023 /* RTIvar.h */,
+				1AE8CEB8171EA30900743023 /* RTIvar.m */,
+				1AE8CEB9171EA30900743023 /* RTMethod.h */,
+				1AE8CEBA171EA30900743023 /* RTMethod.m */,
+				1AE8CEBB171EA30900743023 /* RTProperty.h */,
+				1AE8CEBC171EA30900743023 /* RTProperty.m */,
+				1AE8CEBD171EA30900743023 /* RTProtocol.h */,
+				1AE8CEBE171EA30900743023 /* RTProtocol.m */,
+				1AE8CEBF171EA30900743023 /* RTUnregisteredClass.h */,
+				1AE8CEC0171EA30900743023 /* RTUnregisteredClass.m */,
+			);
+			name = MAObjCRuntime;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -244,6 +290,12 @@
 				1AE8CEA5171E947F00743023 /* FEDUtils.m in Sources */,
 				1AE8CEAC171E956600743023 /* FEDProxyTests.m in Sources */,
 				1AE8CEB2171E969E00743023 /* FEDHelpers.m in Sources */,
+				1AE8CEC1171EA30900743023 /* MARTNSObject.m in Sources */,
+				1AE8CEC2171EA30900743023 /* RTIvar.m in Sources */,
+				1AE8CEC3171EA30900743023 /* RTMethod.m in Sources */,
+				1AE8CEC4171EA30900743023 /* RTProperty.m in Sources */,
+				1AE8CEC5171EA30900743023 /* RTProtocol.m in Sources */,
+				1AE8CEC6171EA30900743023 /* RTUnregisteredClass.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
