@@ -82,8 +82,9 @@
 }
 
 -(void)testNotImplementedMethods{
-    id proxy = [FEDProxy proxyWithDelegate:[NSObject new]
-                                  protocol:@protocol(FEDExampleProtocolWithNotExistentMethods)];
+    id proxy = [FEDProxy
+                proxyWithDelegate:[NSObject new]
+                protocol:@protocol(FEDExampleProtocolWithNotExistentMethods)];
     STAssertThrows([proxy requiredNotImplementedMethod], @"");
     STAssertNoThrow([proxy optionalNotImplementedMethod], @"");
     // test method not present in protocol
