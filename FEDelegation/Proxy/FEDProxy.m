@@ -7,6 +7,7 @@
 //
 
 #import "FEDProxy.h"
+#import "FEDUtils.h"
 
 @implementation FEDProxy{
     Protocol *_protocol;
@@ -17,9 +18,13 @@
 }
 
 +(id)proxyWithDelegate:(id)delegate protocol:(Protocol *)protocol{
-    FEDProxy *proxy = [[[self proxyClass] alloc] init];
+    FEDProxy *proxy = [[self proxyClass] alloc];
     proxy->_protocol = protocol;
     return proxy;
+}
+
+-(NSMethodSignature *)methodSignatureForSelector:(SEL)sel{
+    return [FEDUtils methodSignatureForSelector:sel fromProtocol:_protocol];
 }
 
 @end
