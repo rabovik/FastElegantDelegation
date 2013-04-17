@@ -90,4 +90,11 @@
     STAssertThrows([proxy testNotImplementedMethods], @"");
 }
 
+#pragma mark - Work with weak references
+// see http://stackoverflow.com/questions/13800136/nsproxy-weak-reference-bug-under-arc-on-ios-5
+-(void)testWeakReferencesCompatibilityOnIOS5{
+    __weak id weakProxy = self.proxy;
+    STAssertNotNil(weakProxy, @"");
+}
+
 @end
