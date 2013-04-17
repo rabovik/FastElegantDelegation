@@ -11,5 +11,8 @@
 @interface RTProtocol (FEDAdditions)
 
 - (NSSet *)recursivelyIncorporatedProtocols;
+- (NSArray *)methodsRequired: (BOOL)isRequiredMethod
+                    instance: (BOOL)isInstanceMethod
+                incorporated: (BOOL)recursivelyIncludeIncorporated;
 
 @end

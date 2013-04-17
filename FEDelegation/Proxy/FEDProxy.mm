@@ -37,16 +37,13 @@
     _protocol = objcProtocol;
     
     RTProtocol *protocol = [RTProtocol protocolWithObjCProtocol:objcProtocol];
-    NSMutableSet *protocols = [NSMutableSet setWithObject:protocol];
-    [protocols unionSet:[protocol recursivelyIncorporatedProtocols]];
-    NSMutableArray *requiredMethods = [NSMutableArray array];
-    NSMutableArray *optionalMethods = [NSMutableArray array];
-    for (RTProtocol *protocol in protocols) {
-        [optionalMethods addObjectsFromArray:[protocol methodsRequired:NO instance:YES]];
-        [requiredMethods addObjectsFromArray:[protocol methodsRequired:YES instance:YES]];
-    }
-    NSMutableArray *allMethods = [NSMutableArray arrayWithArray:requiredMethods];
-    [allMethods addObjectsFromArray:optionalMethods];
+    NSArray *requiredMethods = [protocol methodsRequired:YES
+                                                instance:YES
+                                            incorporated:YES];
+    NSArray *optionalMethods = [protocol methodsRequired:NO
+                                                instance:YES
+                                            incorporated:YES];
+    NSArray *allMethods = [requiredMethods arrayByAddingObjectsFromArray:optionalMethods];
     for (RTMethod *method in requiredMethods){
         _delegateSelectors.insert(method.selector);
     }
