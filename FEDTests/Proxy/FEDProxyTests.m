@@ -11,17 +11,26 @@
 @interface FEDProxyTests ()
 @property (nonatomic,strong) FEDExampleDelegate *delegate;
 @property (nonatomic,strong) FEDProxy *proxy;
+@property (nonatomic,strong) FEDExampleDelegator *delegator;
 @end
 
 @implementation FEDProxyTests
 
+#pragma mark - Setup
 -(void)setUp{
     [super setUp];
     _delegate = [FEDExampleDelegate new];
     _proxy = [FEDProxy proxyWithDelegate:_delegate
                                 protocol:@protocol(FEDExampleProtocol)];
+    _delegator = [FEDExampleDelegator new];
+    _delegator.delegate = _delegate;
 }
 
+-(void)tearDown{
+    [super tearDown];
+}
+
+#pragma mark - Signatures
 -(void)runMethodSignatureTestForSelector:(SEL)selector{
     NSMethodSignature *delegateSignature =
         [self.delegate methodSignatureForSelector:selector];
@@ -53,11 +62,16 @@
 }
 
 -(void)testMethodsInProtocol{
-    Protocol *protocol = @protocol(FEDExampleProtocol);
-    NSArray *methods = [FEDUtils instanceMethodsInProtocol:protocol withAdopted:YES];
+    RTProtocol *protocol = [RTProtocol
+                            protocolWithObjCProtocol:@protocol(FEDExampleProtocol)];
+    NSArray *methods = [[protocol methodsRequired:YES instance:YES incorporated:YES]
+                        arrayByAddingObjectsFromArray:
+                        [protocol methodsRequired:NO instance:YES incorporated:YES]];
     for (RTMethod *method in methods) {
         NSLog(@"%@",method.selectorName);
     }
 }
+
+#pragma mark - Delegation
 
 @end

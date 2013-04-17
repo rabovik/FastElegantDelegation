@@ -19,6 +19,8 @@
 #import "RTProtocol.h"
 #import "RTUnregisteredClass.h"
 
+#import "RTProtocol+FEDAdditions.h"
+
 
 @interface FEDTests : SenTestCase
 @end
