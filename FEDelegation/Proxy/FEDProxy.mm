@@ -14,7 +14,7 @@
 
 @implementation FEDProxy{
     Protocol *_protocol;
-    std::unordered_map<SEL,NSMethodSignature *> _signatures;
+    std::unordered_map<SEL,id> _signatures;
 }
 
 +(Class)proxyClass{
@@ -41,11 +41,13 @@
 }
 
 -(NSMethodSignature *)methodSignatureForSelector:(SEL)selector{
-    NSMethodSignature *signature = _signatures[selector];
-    if (!signature) {
-        signature = [super methodSignatureForSelector:selector];
+    std::unordered_map<SEL,id>::const_iterator pair = _signatures.find(selector);
+    if (pair != _signatures.end()) {
+        return pair->second;
+    }else{
+        return [super methodSignatureForSelector:selector];
     }
-    return signature;
+    return nil;
 }
 
 @end
