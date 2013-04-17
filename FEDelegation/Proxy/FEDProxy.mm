@@ -37,8 +37,8 @@
     _protocol = objcProtocol;
     
     RTProtocol *protocol = [RTProtocol protocolWithObjCProtocol:objcProtocol];
-    NSMutableArray *protocols = [NSMutableArray arrayWithObject:protocol];
-    [protocols addObjectsFromArray:[protocol recursivelyIncorporatedProtocols]];
+    NSMutableSet *protocols = [NSMutableSet setWithObject:protocol];
+    [protocols unionSet:[protocol recursivelyIncorporatedProtocols]];
     NSMutableArray *requiredMethods = [NSMutableArray array];
     NSMutableArray *optionalMethods = [NSMutableArray array];
     for (RTProtocol *protocol in protocols) {

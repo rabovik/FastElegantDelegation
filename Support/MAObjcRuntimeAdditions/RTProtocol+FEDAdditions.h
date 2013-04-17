@@ -10,6 +10,6 @@
 
 @interface RTProtocol (FEDAdditions)
 
-- (NSArray *)recursivelyIncorporatedProtocols;
+- (NSSet *)recursivelyIncorporatedProtocols;
 
 @end
