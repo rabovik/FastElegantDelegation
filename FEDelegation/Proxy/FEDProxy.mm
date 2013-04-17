@@ -42,6 +42,9 @@
 
 -(NSMethodSignature *)methodSignatureForSelector:(SEL)selector{
     NSMethodSignature *signature = _signatures[selector];
+    if (!signature) {
+        signature = [super methodSignatureForSelector:selector];
+    }
     return signature;
 }
 

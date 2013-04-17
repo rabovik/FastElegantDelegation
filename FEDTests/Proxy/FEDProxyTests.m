@@ -47,6 +47,11 @@
     [self runMethodSignatureTestForSelector:@selector(self)];
 }
 
+-(void)testSignatureForNonExistentSelector{
+    SEL selector = @selector(selector_doesNot_exists);
+    STAssertThrows([self.proxy methodSignatureForSelector:selector],@"");
+}
+
 -(void)testMethodsInProtocol{
     Protocol *protocol = @protocol(FEDExampleProtocol);
     NSArray *methods = [FEDUtils instanceMethodsInProtocol:protocol withAdopted:YES];
