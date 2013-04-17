@@ -10,6 +10,6 @@
 
 @implementation FEDExampleDelegate
 
--(void)method{};
+-(void)requiredMethod{};
 
 @end

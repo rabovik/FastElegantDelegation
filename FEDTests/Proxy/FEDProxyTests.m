@@ -22,20 +22,29 @@
                                 protocol:@protocol(FEDExampleProtocol)];
 }
 
--(void)testMethodSignature{
-    SEL selector = @selector(method);
+-(void)runMethodSignatureTestForSelector:(SEL)selector{
     NSMethodSignature *delegateSignature =
         [self.delegate methodSignatureForSelector:selector];
     NSMethodSignature *proxySignature = [self.proxy methodSignatureForSelector:selector];
-    STAssertEqualObjects(delegateSignature, proxySignature, @"");
+    STAssertNotNil(delegateSignature,
+                   @"Selector: %@",
+                   NSStringFromSelector(selector));
+    STAssertNotNil(proxySignature,
+                   @"Selector: %@",
+                   NSStringFromSelector(selector));
+    STAssertEqualObjects(delegateSignature,
+                         proxySignature,
+                         @"Selector: %@",
+                         NSStringFromSelector(selector));
 }
 
--(void)testMethodSignatureForOptionalMethod{
-    SEL selector = @selector(methodWithArgument:);
-    NSMethodSignature *delegateSignature =
-    [self.delegate methodSignatureForSelector:selector];
-    NSMethodSignature *proxySignature = [self.proxy methodSignatureForSelector:selector];
-    STAssertEqualObjects(delegateSignature, proxySignature, @"");    
+-(void)testMethodSignatures{
+    // required
+    [self runMethodSignatureTestForSelector:@selector(requiredMethod)];
+    // optional
+    [self runMethodSignatureTestForSelector:@selector(methodWithArgument:)];
+    // method in adopted protocol
+    [self runMethodSignatureTestForSelector:@selector(self)];
 }
 
 @end
