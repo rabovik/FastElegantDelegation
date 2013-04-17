@@ -1,5 +1,5 @@
 //
-//  FEDProxyTests.h
+//  FEDMAObjCRuntimeTests.h
 //  FEDelegation
 //
 //  Created by Yan Rabovik on 17.04.13.
@@ -8,6 +8,6 @@
 
 #import "FEDTests.h"
 
-@interface FEDProxyTests : FEDTests
+@interface FEDMAObjCRuntimeTests : FEDTests
 
 @end

@@ -8,7 +8,17 @@
 
 #import <SenTestingKit/SenTestingKit.h>
 #import "FEDelegation.h"
+#import "FEDUtils.h"
+
 #import "FEDHelpers.h"
+
+#import "MARTNSObject.h"
+#import "RTIvar.h"
+#import "RTMethod.h"
+#import "RTProtocol.h"
+#import "RTProtocol.h"
+#import "RTUnregisteredClass.h"
+
 
 @interface FEDTests : SenTestCase
 @end
