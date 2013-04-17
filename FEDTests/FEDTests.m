@@ -10,23 +10,14 @@
 
 @implementation FEDTests
 
-- (void)setUp
-{
+-(void)setUp{
     [super setUp];
-    
-    // Set-up code here.
+    NSLog(@"------------  Start  ------------");
 }
 
-- (void)tearDown
-{
-    // Tear-down code here.
-    
+-(void)tearDown{
     [super tearDown];
-}
-
-- (void)testExample
-{
-    STFail(@"Unit tests are not implemented yet in FEDTests");
+    NSLog(@"------------   End   ------------");
 }
 
 @end
