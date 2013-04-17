@@ -8,7 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol FEDExampleProtocol <NSObject>
+@protocol FEDParentProtocol <NSObject>
+@optional
+-(void)parentOptionalMethod;
+@end
+
+@protocol FEDExampleProtocol <FEDParentProtocol>
 -(void)requiredMethod;
 @optional
 -(void)methodWithArgument:(id)arg;
@@ -16,4 +21,10 @@
 @end
 
 @interface FEDExampleDelegate : NSObject<FEDExampleProtocol>
+@end
+
+@interface FEDExampleDelegator : NSObject
+-(void)requiredMethod;
+-(void)methodWithArgument:(id)arg;
+@property (nonatomic,weak) id<FEDExampleProtocol> delegate;
 @end
