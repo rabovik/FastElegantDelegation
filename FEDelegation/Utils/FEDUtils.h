@@ -11,5 +11,6 @@
 @interface FEDUtils : NSObject
 
 +(id)methodSignatureForSelector:(SEL)selector fromProtocol:(Protocol *)protocol;
++(NSArray*)instanceMethodsInProtocol:(Protocol*)protocol withAdopted:(BOOL)adopted;
 
 @end

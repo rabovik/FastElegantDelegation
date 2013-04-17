@@ -47,4 +47,12 @@
     [self runMethodSignatureTestForSelector:@selector(self)];
 }
 
+-(void)testMethodsInProtocol{
+    Protocol *protocol = @protocol(FEDExampleProtocol);
+    NSArray *methods = [FEDUtils instanceMethodsInProtocol:protocol withAdopted:YES];
+    for (RTMethod *method in methods) {
+        NSLog(@"%@",method.selectorName);
+    }
+}
+
 @end

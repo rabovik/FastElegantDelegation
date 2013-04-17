@@ -8,6 +8,15 @@
 
 #import "FEDTests.h"
 
+#import "FEDUtils.h"
+
+#import "MARTNSObject.h"
+#import "RTIvar.h"
+#import "RTMethod.h"
+#import "RTProtocol.h"
+#import "RTProtocol.h"
+#import "RTUnregisteredClass.h"
+
 @interface FEDProxyTests : FEDTests
 
 @end

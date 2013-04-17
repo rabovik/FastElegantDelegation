@@ -13,14 +13,7 @@
 @implementation FEDUtils
 
 +(id)methodSignatureForSelector:(SEL)selector fromProtocol:(Protocol *)objcProtocol{
-    RTProtocol *protocol = [RTProtocol protocolWithObjCProtocol:objcProtocol];
-    NSMutableArray *protocolAndAdopted = [NSMutableArray arrayWithObject:protocol];
-    [protocolAndAdopted addObjectsFromArray:[protocol incorporatedProtocols]];
-    NSMutableArray *methods = [NSMutableArray array];
-    for (RTProtocol *protocol in protocolAndAdopted) {
-        [methods addObjectsFromArray:[protocol methodsRequired:NO instance:YES]];
-        [methods addObjectsFromArray:[protocol methodsRequired:YES instance:YES]];
-    }
+    NSArray *methods = [self instanceMethodsInProtocol:objcProtocol withAdopted:YES];
     for (RTMethod *method in methods) {
         if (method.selector == selector){
             return [NSMethodSignature
@@ -30,5 +23,20 @@
     }
     return nil;
 }
+
++(NSArray*)instanceMethodsInProtocol:(Protocol*)objcProtocol withAdopted:(BOOL)adopted{
+    RTProtocol *protocol = [RTProtocol protocolWithObjCProtocol:objcProtocol];
+    NSMutableArray *protocols = [NSMutableArray arrayWithObject:protocol];
+    if (adopted) {
+        [protocols addObjectsFromArray:[protocol incorporatedProtocols]];
+    }
+    NSMutableArray *methods = [NSMutableArray array];
+    for (RTProtocol *protocol in protocols) {
+        [methods addObjectsFromArray:[protocol methodsRequired:NO instance:YES]];
+        [methods addObjectsFromArray:[protocol methodsRequired:YES instance:YES]];
+    }
+    return methods;
+}
+
 
 @end
