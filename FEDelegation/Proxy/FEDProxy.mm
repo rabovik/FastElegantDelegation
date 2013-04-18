@@ -19,7 +19,8 @@
     __weak id _delegate; \
     Protocol *_protocol; \
     std::unordered_map<SEL,id> _signatures; \
-    std::unordered_set<SEL> _delegateSelectors;
+    std::unordered_set<SEL> _delegateSelectors; \
+    dispatch_block_t _onDeallocBlock;
 
 #if __IPHONE_OS_VERSION_MIN_REQUIRED < 60000
 #define FED_USE_IOS5_CLASS_REPLACEMENT_HACK 1
@@ -137,11 +138,12 @@
         static char key;
         objc_setAssociatedObject(delegate, &key, self, OBJC_ASSOCIATION_RETAIN);
     }
+    _onDeallocBlock = block;
     return self;
 }
 
 -(void)dealloc{
-    
+    if (_onDeallocBlock) _onDeallocBlock();
 }
 
 #pragma mark - Forwarding
