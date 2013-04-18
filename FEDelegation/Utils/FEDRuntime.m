@@ -43,4 +43,10 @@
     return [[protocols lastObject] objCProtocol];
 }
 
++(BOOL)propertyIsWeak:(NSString *)propertyName object:(id)object{
+    RTProperty *property = [[object class] rt_propertyForName:propertyName];
+    return (RTPropertySetterSemanticsAssign == property.setterSemantics);
+}
+
+
 @end

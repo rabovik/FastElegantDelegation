@@ -11,5 +11,6 @@
 @interface FEDRuntime : NSObject
 
 +(Protocol *)protocolFromProperty:(NSString *)propertyName object:(id)object;
++(BOOL)propertyIsWeak:(NSString *)propertyName object:(id)object;
 
 @end
