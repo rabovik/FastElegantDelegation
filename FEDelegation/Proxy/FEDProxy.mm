@@ -72,22 +72,51 @@
 }
 
 +(id)proxyWithDelegate:(id)delegate protocol:(Protocol *)protocol{
-    return [self proxyWithDelegate:delegate protocol:protocol retainedByDelegate:NO];
-}
-
-+(id)proxyWithDelegate:(id)delegate
-              protocol:(Protocol *)protocol
-    retainedByDelegate:(BOOL)retained
-{
     return [self proxyWithDelegate:delegate
                           protocol:protocol
-                retainedByDelegate:retained
+                    retainDelegate:NO
+                retainedByDelegate:NO
                          onDealloc:nil];
 }
 
 +(id)proxyWithDelegate:(id)delegate
               protocol:(Protocol *)protocol
-    retainedByDelegate:(BOOL)retained
+    retainedByDelegate:(BOOL)retainedByDelegate
+{
+    return [self proxyWithDelegate:delegate
+                          protocol:protocol
+                    retainDelegate:NO
+                retainedByDelegate:retainedByDelegate
+                         onDealloc:nil];
+}
+
++(id)proxyWithDelegate:(id)delegate
+              protocol:(Protocol *)protocol
+    retainedByDelegate:(BOOL)retainedByDelegate
+             onDealloc:(dispatch_block_t)block
+{
+    return [self proxyWithDelegate:delegate
+                          protocol:protocol
+                    retainDelegate:NO
+                retainedByDelegate:retainedByDelegate
+                         onDealloc:block];
+}
+
++(id)proxyWithDelegate:(id)delegate
+              protocol:(Protocol *)protocol
+        retainDelegate:(BOOL)retainDelegate
+{
+    return [self proxyWithDelegate:delegate
+                          protocol:protocol
+                    retainDelegate:retainDelegate
+                retainedByDelegate:NO
+                         onDealloc:nil];
+}
+
++(id)proxyWithDelegate:(id)delegate
+              protocol:(Protocol *)protocol
+        retainDelegate:(BOOL)retainDelegate
+    retainedByDelegate:(BOOL)retainedByDelegate
              onDealloc:(dispatch_block_t)block
 {
     FEDProxy *proxy = [[self proxyClass] alloc];
@@ -98,14 +127,16 @@
 #endif
     [proxy fed_initWithDelegate:delegate
                        protocol:protocol
-             retainedByDelegate:retained
+                 retainDelegate:retainDelegate
+             retainedByDelegate:retainedByDelegate
                       onDealloc:block];
     return proxy;
 }
 
 -(id)fed_initWithDelegate:(id)delegate
                  protocol:(Protocol *)objcProtocol
-       retainedByDelegate:(BOOL)retained
+           retainDelegate:(BOOL)retainDelegate
+       retainedByDelegate:(BOOL)retainedByDelegate
                 onDealloc:(dispatch_block_t)block
 {
     _delegate = delegate;
@@ -113,7 +144,7 @@
     
     [self fed_prepareSelectorsCache];
     
-    if (retained) {
+    if (retainedByDelegate) {
         static char key;
         objc_setAssociatedObject(delegate, &key, self, OBJC_ASSOCIATION_RETAIN);
     }

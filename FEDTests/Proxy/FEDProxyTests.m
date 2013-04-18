@@ -109,7 +109,7 @@
     STAssertNotNil(weakProxy, @"");
 }
 
-#pragma mark - Retained by delegate
+#pragma mark - Retaining
 -(void)testRetainedByDelegate{
     __weak id weakProxy;
     @autoreleasepool {
@@ -120,6 +120,18 @@
     }
     id strongProxy = weakProxy;
     STAssertNotNil(strongProxy, @"");
+}
+
+-(void)testRetainDelegate{
+    id proxy;
+    @autoreleasepool {
+        FEDExampleDelegate *delegate = [FEDExampleDelegate new];
+        proxy = [FEDProxy proxyWithDelegate:delegate
+                                   protocol:@protocol(FEDExampleProtocol)
+                             retainDelegate:YES];
+        delegate = nil;
+    }
+    STAssertTrue(42 == [proxy parentOptionalMethodReturns42], @"");
 }
 
 #pragma mark - OnDealloc
