@@ -86,11 +86,15 @@
     }
 #endif
     [proxy fed_initWithDelegate:delegate
-                       protocol:protocol];
+                       protocol:protocol
+             retainedByDelegate:retained];
     return proxy;
 }
 
--(id)fed_initWithDelegate:(id)delegate protocol:(Protocol *)objcProtocol{
+-(id)fed_initWithDelegate:(id)delegate
+                 protocol:(Protocol *)objcProtocol
+       retainedByDelegate:(BOOL)retained
+{
     _delegate = delegate;
     _protocol = objcProtocol;
     
@@ -115,6 +119,10 @@
         const char *types = [method.signature
                              cStringUsingEncoding:NSUTF8StringEncoding];
         _signatures[method.selector] = [NSMethodSignature signatureWithObjCTypes:types];
+    }
+    if (retained) {
+        static char key;
+        objc_setAssociatedObject(delegate, &key, self, OBJC_ASSOCIATION_RETAIN);
     }
     return self;
 }
