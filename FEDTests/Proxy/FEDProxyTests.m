@@ -108,4 +108,17 @@
     STAssertNotNil(weakProxy, @"");
 }
 
+#pragma mark - Retained by delegate
+-(void)testRetainedByDelegate{
+    __weak id weakProxy;
+    @autoreleasepool {
+        id proxy = [FEDProxy proxyWithDelegate:self.delegate
+                                      protocol:@protocol(FEDExampleProtocol)
+                            retainedByDelegate:YES];
+        weakProxy = proxy;
+    }
+    id strongProxy = weakProxy;
+    STAssertNotNil(strongProxy, @"");
+}
+
 @end

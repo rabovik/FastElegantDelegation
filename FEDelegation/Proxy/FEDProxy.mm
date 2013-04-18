@@ -72,6 +72,13 @@
 }
 
 +(id)proxyWithDelegate:(id)delegate protocol:(Protocol *)protocol{
+    return [self proxyWithDelegate:delegate protocol:protocol retainedByDelegate:NO];
+}
+
++(id)proxyWithDelegate:(id)delegate
+              protocol:(Protocol *)protocol
+    retainedByDelegate:(BOOL)retained
+{
     FEDProxy *proxy = [[self proxyClass] alloc];
 #ifdef FED_USE_IOS5_CLASS_REPLACEMENT_HACK
     if ([self proxyClass] == [FEDProxy_IOS5 class]) {

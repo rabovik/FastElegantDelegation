@@ -11,5 +11,9 @@
 @interface FEDProxy : NSProxy
 
 +(id)proxyWithDelegate:(id)delegate protocol:(Protocol *)protocol;
++(id)proxyWithDelegate:(id)delegate
+              protocol:(Protocol *)protocol
+    retainedByDelegate:(BOOL)retained;
+
 
 @end
