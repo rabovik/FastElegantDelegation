@@ -158,13 +158,31 @@
 @property (nonatomic,strong) FEDExampleDelegate *strongDelegate;
 @end
 
-@implementation FEDProxyDelegatorTests{}
+@implementation FEDProxyDelegatorTests{
+    NSLock *lock;
+    BOOL _testDone;
+    NSUInteger _testStep;
+}
 
 #pragma mark - Setup
+- (void)waitForCompletion:(NSTimeInterval)timeoutSecs{
+    NSDate *timeoutDate = [NSDate dateWithTimeIntervalSinceNow:timeoutSecs];
+    do{
+        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:timeoutDate];
+        if ([timeoutDate timeIntervalSinceNow] < 0.0){
+            STFail(@"TimeOut");
+            break;
+        }
+    }
+    while (!_testDone);
+}
+
 -(void)setUp{
     [super setUp];
     _delegator = [FEDExampleDelegator new];
     _strongDelegate = [FEDExampleDelegate new];
+    _testDone = NO;
+    _testStep = 0;
 }
 
 -(void)tearDown{
@@ -184,5 +202,46 @@
     STAssertNoThrow([self.delegator.delegate parentOptionalMethod], @"");
     STAssertNoThrow([self.delegator.strongDelegate parentOptionalMethod], @"");
 }
+
+-(void)testDelegateIsAliveIfProxyIsAlive{
+    lock = [NSLock new];
+    [lock lock];
+    STAssertTrue(1 == ++_testStep, @"");
+    // Step 1. Create real delegate;
+    __block id delegate = [FEDExampleDelegate new];
+    @autoreleasepool {
+        self.delegator.delegate = delegate;
+    }
+    [self
+     performSelectorInBackground:@selector(delegateIsAliveIfProxyIsAliveBackgroundTest)
+     withObject:nil];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.1 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
+        STAssertTrue(3 == ++_testStep, @"");
+        // Step 3. Destroy real delegate
+        delegate = nil;
+        [lock unlock];
+    });
+    [self waitForCompletion:5];
+    STAssertTrue(5 == ++_testStep, @"");
+    // Step 5. Finish test.
+    lock = nil;
+}
+
+-(void)delegateIsAliveIfProxyIsAliveBackgroundTest{
+    STAssertTrue(2 == ++_testStep, @"");
+    // Step 2. Save strong reference to proxy;
+    id delegate = self.delegator.delegate;
+    [lock lock];
+    STAssertTrue(4 == ++_testStep, @"");
+    // Step 4. Normally real delegate should be nil here.
+    // But we extended it's lifetime in delegator's 'delegate' getter
+    // so it is still alive
+    STAssertTrue(42 == [delegate parentOptionalMethodReturns42], @"");
+    [lock unlock];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        _testDone = YES;
+    });
+}
+
 
 @end
