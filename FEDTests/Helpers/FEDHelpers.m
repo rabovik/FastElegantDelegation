@@ -23,21 +23,21 @@
 
 @end
 
-@implementation FEDExampleDelegator{
-    id _proxy;
+@implementation FEDExampleDelegator
+@synthesize delegate=_fed_delegate;
+
+-(void)setDelegate:(id)delegate{
+    _fed_delegate = [FEDProxy proxyWithDelegate:delegate
+                                       protocol:@protocol(FEDExampleProtocol)
+                             retainedByDelegate:YES];
 }
 
--(void)setDelegate:(id<FEDExampleProtocol>)delegate{
-    _proxy = [FEDProxy proxyWithDelegate:delegate protocol:@protocol(FEDExampleProtocol)];
-    _delegate = _proxy;
+-(id)delegate{
+    return _fed_delegate;
 }
 
--(void)requiredMethod{
-    [self.delegate requiredMethod];
-}
-
--(void)methodWithArgument:(id)arg{
-    [self.delegate methodWithArgument:arg];
+-(int)parentOptionalMethodReturns42{
+    return [self.delegate parentOptionalMethodReturns42];
 }
 
 @end

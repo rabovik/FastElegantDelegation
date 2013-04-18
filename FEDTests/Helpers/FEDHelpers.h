@@ -32,7 +32,6 @@
 @end
 
 @interface FEDExampleDelegator : NSObject
--(void)requiredMethod;
--(void)methodWithArgument:(id)arg;
+-(int)parentOptionalMethodReturns42;
 @property (nonatomic,weak) id<FEDExampleProtocol> delegate;
 @end

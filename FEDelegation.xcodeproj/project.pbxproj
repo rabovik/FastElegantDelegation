@@ -43,7 +43,6 @@
 		1AE8CE9F171E90A000743023 /* FEDProxy.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = FEDProxy.mm; path = Proxy/FEDProxy.mm; sourceTree = "<group>"; };
 		1AE8CEA3171E947F00743023 /* FEDUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FEDUtils.h; path = Utils/FEDUtils.h; sourceTree = "<group>"; };
 		1AE8CEA4171E947F00743023 /* FEDUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FEDUtils.m; path = Utils/FEDUtils.m; sourceTree = "<group>"; };
-		1AE8CEAA171E956600743023 /* FEDProxyTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FEDProxyTests.h; path = Proxy/FEDProxyTests.h; sourceTree = "<group>"; };
 		1AE8CEAB171E956600743023 /* FEDProxyTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FEDProxyTests.m; path = Proxy/FEDProxyTests.m; sourceTree = "<group>"; };
 		1AE8CEB0171E969D00743023 /* FEDHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FEDHelpers.h; path = Helpers/FEDHelpers.h; sourceTree = "<group>"; };
 		1AE8CEB1171E969D00743023 /* FEDHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FEDHelpers.m; path = Helpers/FEDHelpers.m; sourceTree = "<group>"; };
@@ -175,7 +174,6 @@
 		1AE8CEAD171E956900743023 /* Proxy */ = {
 			isa = PBXGroup;
 			children = (
-				1AE8CEAA171E956600743023 /* FEDProxyTests.h */,
 				1AE8CEAB171E956600743023 /* FEDProxyTests.m */,
 			);
 			name = Proxy;

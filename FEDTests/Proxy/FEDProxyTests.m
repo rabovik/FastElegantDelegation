@@ -6,9 +6,9 @@
 //  Copyright (c) 2013 Yan Rabovik. All rights reserved.
 //
 
-#import "FEDProxyTests.h"
+#import "FEDTests.h"
 
-@interface FEDProxyTests ()
+@interface FEDProxyTests : FEDTests
 @property (nonatomic,strong) FEDExampleDelegate *strongDelegate;
 @property (nonatomic,strong) id strongProxy;
 @end
@@ -26,6 +26,8 @@
 }
 
 -(void)tearDown{
+    _strongDelegate = nil;
+    _strongProxy = nil;
     [super tearDown];
 }
 
@@ -131,6 +133,36 @@
         proxy = nil;
     }
     STAssertTrue(dispatched, @"");
+}
+
+@end
+
+@interface FEDProxyDelegatorTests : FEDTests
+@property (nonatomic,strong) FEDExampleDelegator *delegator;
+@property (nonatomic,strong) FEDExampleDelegate *strongDelegate;
+@end
+
+@implementation FEDProxyDelegatorTests
+
+#pragma mark - Setup
+-(void)setUp{
+    [super setUp];
+    _delegator = [FEDExampleDelegator new];
+    _strongDelegate = [FEDExampleDelegate new];
+}
+
+-(void)tearDown{
+    _strongDelegate = nil;
+    _delegator = nil;
+    [super tearDown];
+}
+
+#pragma mark - Tests
+-(void)testDelegatorWorks{
+    @autoreleasepool {
+        self.delegator.delegate = self.strongDelegate;
+    }
+    STAssertTrue(42 == [self.delegator parentOptionalMethodReturns42], @"");
 }
 
 @end
