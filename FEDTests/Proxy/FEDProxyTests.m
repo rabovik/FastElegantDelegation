@@ -121,4 +121,19 @@
     STAssertNotNil(strongProxy, @"");
 }
 
+#pragma mark - OnDealloc
+-(void)testOnDeallocBlock{
+    __block BOOL dispatched = NO;
+    @autoreleasepool {
+        id proxy = [FEDProxy proxyWithDelegate:[NSObject new]
+                                      protocol:@protocol(FEDExampleProtocol)
+                            retainedByDelegate:YES
+                                     onDealloc:^{
+                                         dispatched = YES;
+                                     }];
+        proxy = nil;
+    }
+    STAssertTrue(dispatched, @"");
+}
+
 @end

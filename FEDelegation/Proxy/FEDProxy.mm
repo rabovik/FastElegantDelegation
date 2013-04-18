@@ -79,6 +79,17 @@
               protocol:(Protocol *)protocol
     retainedByDelegate:(BOOL)retained
 {
+    return [self proxyWithDelegate:delegate
+                          protocol:protocol
+                retainedByDelegate:retained
+                         onDealloc:nil];
+}
+
++(id)proxyWithDelegate:(id)delegate
+              protocol:(Protocol *)protocol
+    retainedByDelegate:(BOOL)retained
+             onDealloc:(dispatch_block_t)block
+{
     FEDProxy *proxy = [[self proxyClass] alloc];
 #ifdef FED_USE_IOS5_CLASS_REPLACEMENT_HACK
     if ([self proxyClass] == [FEDProxy_IOS5 class]) {
@@ -87,13 +98,15 @@
 #endif
     [proxy fed_initWithDelegate:delegate
                        protocol:protocol
-             retainedByDelegate:retained];
+             retainedByDelegate:retained
+                      onDealloc:block];
     return proxy;
 }
 
 -(id)fed_initWithDelegate:(id)delegate
                  protocol:(Protocol *)objcProtocol
        retainedByDelegate:(BOOL)retained
+                onDealloc:(dispatch_block_t)block
 {
     _delegate = delegate;
     _protocol = objcProtocol;
@@ -125,6 +138,10 @@
         objc_setAssociatedObject(delegate, &key, self, OBJC_ASSOCIATION_RETAIN);
     }
     return self;
+}
+
+-(void)dealloc{
+    
 }
 
 #pragma mark - Forwarding

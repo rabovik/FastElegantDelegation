@@ -14,6 +14,9 @@
 +(id)proxyWithDelegate:(id)delegate
               protocol:(Protocol *)protocol
     retainedByDelegate:(BOOL)retained;
-
++(id)proxyWithDelegate:(id)delegate
+              protocol:(Protocol *)protocol
+    retainedByDelegate:(BOOL)retained
+             onDealloc:(dispatch_block_t)block;
 
 @end
