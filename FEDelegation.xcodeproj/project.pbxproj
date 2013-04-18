@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1A71D11E171EDC4600A67E40 /* RTProtocol+FEDAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A71D11D171EDC4600A67E40 /* RTProtocol+FEDAdditions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		1A71D11E171EDC4600A67E40 /* MAObjCRuntime+FEDAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A71D11D171EDC4600A67E40 /* MAObjCRuntime+FEDAdditions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		1A71D126171FD5E900A67E40 /* FEDRuntimeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A71D125171FD5E900A67E40 /* FEDRuntimeTests.m */; };
 		1AE8CE8C171E8E9400743023 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AE8CE6F171E8DD200743023 /* SenTestingKit.framework */; };
 		1AE8CE8D171E8E9400743023 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AE8CE51171E8DD100743023 /* UIKit.framework */; };
@@ -27,8 +27,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1A71D11C171EDC4600A67E40 /* RTProtocol+FEDAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "RTProtocol+FEDAdditions.h"; path = "Support/MAObjcRuntimeAdditions/RTProtocol+FEDAdditions.h"; sourceTree = "<group>"; };
-		1A71D11D171EDC4600A67E40 /* RTProtocol+FEDAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "RTProtocol+FEDAdditions.m"; path = "Support/MAObjcRuntimeAdditions/RTProtocol+FEDAdditions.m"; sourceTree = "<group>"; };
+		1A71D11C171EDC4600A67E40 /* MAObjCRuntime+FEDAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MAObjCRuntime+FEDAdditions.h"; path = "Support/MAObjcRuntimeAdditions/MAObjCRuntime+FEDAdditions.h"; sourceTree = "<group>"; };
+		1A71D11D171EDC4600A67E40 /* MAObjCRuntime+FEDAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "MAObjCRuntime+FEDAdditions.m"; path = "Support/MAObjcRuntimeAdditions/MAObjCRuntime+FEDAdditions.m"; sourceTree = "<group>"; };
 		1A71D125171FD5E900A67E40 /* FEDRuntimeTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FEDRuntimeTests.m; path = Runtime/FEDRuntimeTests.m; sourceTree = "<group>"; };
 		1AE8CE51171E8DD100743023 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		1AE8CE53171E8DD100743023 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -79,8 +79,8 @@
 		1A71D11B171EDC0C00A67E40 /* MAObjcRuntimeAdditions */ = {
 			isa = PBXGroup;
 			children = (
-				1A71D11C171EDC4600A67E40 /* RTProtocol+FEDAdditions.h */,
-				1A71D11D171EDC4600A67E40 /* RTProtocol+FEDAdditions.m */,
+				1A71D11C171EDC4600A67E40 /* MAObjCRuntime+FEDAdditions.h */,
+				1A71D11D171EDC4600A67E40 /* MAObjCRuntime+FEDAdditions.m */,
 			);
 			name = MAObjcRuntimeAdditions;
 			sourceTree = "<group>";
@@ -318,7 +318,7 @@
 				1AE8CEC4171EA30900743023 /* RTProperty.m in Sources */,
 				1AE8CEC5171EA30900743023 /* RTProtocol.m in Sources */,
 				1AE8CEC6171EA30900743023 /* RTUnregisteredClass.m in Sources */,
-				1A71D11E171EDC4600A67E40 /* RTProtocol+FEDAdditions.m in Sources */,
+				1A71D11E171EDC4600A67E40 /* MAObjCRuntime+FEDAdditions.m in Sources */,
 				1A71D126171FD5E900A67E40 /* FEDRuntimeTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

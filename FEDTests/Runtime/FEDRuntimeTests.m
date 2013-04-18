@@ -18,7 +18,7 @@
     Protocol *protocol = [FEDRuntime protocolFromProperty:@"delegate" object:object];
     RTProtocol *etalonProtocol =
         [RTProtocol protocolWithObjCProtocol:@protocol(FEDExampleProtocol)];
-    STAssertEqualObjects(etalonProtocol, protocol, @"");
+    STAssertTrue(protocol_isEqual(protocol,[etalonProtocol objCProtocol]),@"");
 }
 
 @end

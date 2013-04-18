@@ -16,10 +16,10 @@
 #import "RTIvar.h"
 #import "RTMethod.h"
 #import "RTProtocol.h"
-#import "RTProtocol.h"
+#import "RTProperty.h"
 #import "RTUnregisteredClass.h"
 
-#import "RTProtocol+FEDAdditions.h"
+#import "MAObjCRuntime+FEDAdditions.h"
 
 
 @interface FEDTests : SenTestCase

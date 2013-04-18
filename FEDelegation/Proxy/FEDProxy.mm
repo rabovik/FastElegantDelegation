@@ -10,7 +10,7 @@
 #import "MARTNSObject.h"
 #import "RTMethod.h"
 #import "RTProtocol.h"
-#import "RTProtocol+FEDAdditions.h"
+#import "MAObjCRuntime+FEDAdditions.h"
 #import <unordered_map>
 #import <unordered_set>
 
