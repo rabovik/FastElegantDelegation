@@ -12,6 +12,8 @@
 
 @implementation FEDRuntime
 
-
++(Protocol *)protocolFromProperty:(NSString *)propertyName object:(id)object{
+    return nil;
+}
 
 @end

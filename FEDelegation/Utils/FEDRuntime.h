@@ -10,4 +10,6 @@
 
 @interface FEDRuntime : NSObject
 
++(Protocol *)protocolFromProperty:(NSString *)propertyName object:(id)object;
+
 @end
