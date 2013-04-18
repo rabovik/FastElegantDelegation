@@ -8,6 +8,8 @@
 
 #import "FEDTests.h"
 
+#pragma mark - PROXY TESTS -
+
 @interface FEDProxyTests : FEDTests
 @property (nonatomic,strong) FEDExampleDelegate *strongDelegate;
 @property (nonatomic,strong) id strongProxy;
@@ -137,12 +139,14 @@
 
 @end
 
+#pragma mark - DELAGATOR TESTS -
+
 @interface FEDProxyDelegatorTests : FEDTests
 @property (nonatomic,strong) FEDExampleDelegator *delegator;
 @property (nonatomic,strong) FEDExampleDelegate *strongDelegate;
 @end
 
-@implementation FEDProxyDelegatorTests
+@implementation FEDProxyDelegatorTests{}
 
 #pragma mark - Setup
 -(void)setUp{
