@@ -9,9 +9,8 @@
 #import "FEDProxyTests.h"
 
 @interface FEDProxyTests ()
-@property (nonatomic,strong) FEDExampleDelegate *delegate;
-@property (nonatomic,strong) id proxy;
-@property (nonatomic,strong) FEDExampleDelegator *delegator;
+@property (nonatomic,strong) FEDExampleDelegate *strongDelegate;
+@property (nonatomic,strong) id strongProxy;
 @end
 
 @implementation FEDProxyTests{
@@ -21,11 +20,9 @@
 #pragma mark - Setup
 -(void)setUp{
     [super setUp];
-    _delegate = [FEDExampleDelegate new];
-    _proxy = [FEDProxy proxyWithDelegate:_delegate
-                                protocol:@protocol(FEDExampleProtocol)];
-    _delegator = [FEDExampleDelegator new];
-    _delegator.delegate = _delegate;
+    _strongDelegate = [FEDExampleDelegate new];
+    _strongProxy = [FEDProxy proxyWithDelegate:_strongDelegate
+                                      protocol:@protocol(FEDExampleProtocol)];
 }
 
 -(void)tearDown{
@@ -35,8 +32,8 @@
 #pragma mark - Signatures
 -(void)runMethodSignatureTestForSelector:(SEL)selector{
     NSMethodSignature *delegateSignature =
-        [self.delegate methodSignatureForSelector:selector];
-    NSMethodSignature *proxySignature = [self.proxy methodSignatureForSelector:selector];
+        [self.strongDelegate methodSignatureForSelector:selector];
+    NSMethodSignature *proxySignature = [self.strongProxy methodSignatureForSelector:selector];
     STAssertNotNil(delegateSignature,
                    @"Selector: %@",
                    NSStringFromSelector(selector));
@@ -60,7 +57,7 @@
 
 -(void)testSignatureForNonExistentSelector{
     SEL selector = @selector(selector_doesNot_exists);
-    STAssertThrows([self.proxy methodSignatureForSelector:selector],@"");
+    STAssertThrows([self.strongProxy methodSignatureForSelector:selector],@"");
 }
 
 -(void)testMethodsInProtocol{
@@ -76,11 +73,11 @@
 
 #pragma mark - Delegation
 -(void)testRequiredImplementedMethod{
-    STAssertTrue(13 == [self.proxy requiredMethodReturns13], @"");
+    STAssertTrue(13 == [self.strongProxy requiredMethodReturns13], @"");
 }
 
 -(void)testOptionalImplementedMethod{
-    STAssertTrue(42 == [self.proxy parentOptionalMethodReturns42], @"");
+    STAssertTrue(42 == [self.strongProxy parentOptionalMethodReturns42], @"");
 }
 
 -(void)testNotImplementedMethods{
@@ -94,17 +91,17 @@
 }
 
 -(void)testRespondsToSelector{
-    STAssertTrue([self.proxy respondsToSelector:@selector(requiredMethodReturns13)], @"");
-    STAssertTrue([self.proxy
+    STAssertTrue([self.strongProxy respondsToSelector:@selector(requiredMethodReturns13)], @"");
+    STAssertTrue([self.strongProxy
                   respondsToSelector:@selector(parentOptionalMethodReturns42)], @"");
-    STAssertFalse([self.proxy
+    STAssertFalse([self.strongProxy
                    respondsToSelector:@selector(optionalNotImplementedMethod)], @"");
 }
 
 #pragma mark - Weak references compatibility
 // see http://stackoverflow.com/questions/13800136/nsproxy-weak-reference-bug-under-arc-on-ios-5
 -(void)testWeakReferencesCompatibilityOnIOS5{
-    __weak id weakProxy = self.proxy;
+    __weak id weakProxy = self.strongProxy;
     STAssertNotNil(weakProxy, @"");
 }
 
@@ -112,7 +109,7 @@
 -(void)testRetainedByDelegate{
     __weak id weakProxy;
     @autoreleasepool {
-        id proxy = [FEDProxy proxyWithDelegate:self.delegate
+        id proxy = [FEDProxy proxyWithDelegate:self.strongDelegate
                                       protocol:@protocol(FEDExampleProtocol)
                             retainedByDelegate:YES];
         weakProxy = proxy;
