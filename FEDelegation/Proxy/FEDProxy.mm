@@ -144,4 +144,12 @@
     [invocation invokeWithTarget:nil];
 }
 
+-(BOOL)respondsToSelector:(SEL)selector{
+    std::unordered_set<SEL>::const_iterator pair = _delegateSelectors.find(selector);
+    if (pair != _delegateSelectors.end()) {
+        return YES;
+    }
+    return NO;
+}
+
 @end
