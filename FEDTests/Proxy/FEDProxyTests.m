@@ -14,7 +14,9 @@
 @property (nonatomic,strong) FEDExampleDelegator *delegator;
 @end
 
-@implementation FEDProxyTests
+@implementation FEDProxyTests{
+    
+}
 
 #pragma mark - Setup
 -(void)setUp{
@@ -91,7 +93,7 @@
     STAssertThrows([proxy testNotImplementedMethods], @"");
 }
 
-#pragma mark - Work with weak references
+#pragma mark - Weak references compatibility
 // see http://stackoverflow.com/questions/13800136/nsproxy-weak-reference-bug-under-arc-on-ios-5
 -(void)testWeakReferencesCompatibilityOnIOS5{
     __weak id weakProxy = self.proxy;
