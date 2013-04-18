@@ -93,6 +93,14 @@
     STAssertThrows([proxy testNotImplementedMethods], @"");
 }
 
+-(void)testRespondsToSelector{
+    STAssertTrue([self.proxy respondsToSelector:@selector(requiredMethodReturns13)], @"");
+    STAssertTrue([self.proxy
+                  respondsToSelector:@selector(parentOptionalMethodReturns42)], @"");
+    STAssertFalse([self.proxy
+                   respondsToSelector:@selector(optionalNotImplementedMethod)], @"");
+}
+
 #pragma mark - Weak references compatibility
 // see http://stackoverflow.com/questions/13800136/nsproxy-weak-reference-bug-under-arc-on-ios-5
 -(void)testWeakReferencesCompatibilityOnIOS5{
