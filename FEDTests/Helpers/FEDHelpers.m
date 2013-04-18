@@ -24,17 +24,7 @@
 @end
 
 @implementation FEDExampleDelegator
-@synthesize delegate=_fed_delegate;
-
--(void)setDelegate:(id)delegate{
-    _fed_delegate = [FEDProxy proxyWithDelegate:delegate
-                                       protocol:@protocol(FEDExampleProtocol)
-                             retainedByDelegate:YES];
-}
-
--(id)delegate{
-    return _fed_delegate;
-}
+fed_use_proxy_for_delegate
 
 -(int)parentOptionalMethodReturns42{
     return [self.delegate parentOptionalMethodReturns42];
