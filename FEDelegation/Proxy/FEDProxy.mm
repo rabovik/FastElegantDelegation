@@ -112,7 +112,20 @@
     _delegate = delegate;
     _protocol = objcProtocol;
     
-    RTProtocol *protocol = [RTProtocol protocolWithObjCProtocol:objcProtocol];
+    [self fed_prepareSelectorsCache];
+    
+    if (retained) {
+        static char key;
+        objc_setAssociatedObject(delegate, &key, self, OBJC_ASSOCIATION_RETAIN);
+    }
+    
+    _onDeallocBlock = block;
+    
+    return self;
+}
+
+-(void)fed_prepareSelectorsCache{
+    RTProtocol *protocol = [RTProtocol protocolWithObjCProtocol:_protocol];
     NSArray *requiredMethods = [protocol methodsRequired:YES
                                                 instance:YES
                                             incorporated:YES];
@@ -133,13 +146,7 @@
         const char *types = [method.signature
                              cStringUsingEncoding:NSUTF8StringEncoding];
         _signatures[method.selector] = [NSMethodSignature signatureWithObjCTypes:types];
-    }
-    if (retained) {
-        static char key;
-        objc_setAssociatedObject(delegate, &key, self, OBJC_ASSOCIATION_RETAIN);
-    }
-    _onDeallocBlock = block;
-    return self;
+    }    
 }
 
 -(void)dealloc{
