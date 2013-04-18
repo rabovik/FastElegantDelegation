@@ -215,7 +215,7 @@
     [self
      performSelectorInBackground:@selector(delegateIsAliveIfProxyIsAliveBackgroundTest)
      withObject:nil];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.1 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.01 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
         STAssertTrue(3 == ++_testStep, @"");
         // Step 3. Destroy real delegate
         delegate = nil;
