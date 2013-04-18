@@ -9,9 +9,9 @@
 #import <Foundation/Foundation.h>
 #import "FEDRuntime.h"
 
-#define fed_use_proxy_for_delegate fed_proxy_for_property(delegate,setDelegate)
+#define fed_use_proxy_for_delegate fed_use_proxy_for_property(delegate,setDelegate)
 
-#define fed_proxy_for_property(GETTER,SETTER)                                            \
+#define fed_use_proxy_for_property(GETTER,SETTER)                                        \
 @synthesize GETTER=_fed_##GETTER;                                                        \
 -(void)SETTER:(id)GETTER{                                                                \
     if (nil == GETTER) {                                                                 \

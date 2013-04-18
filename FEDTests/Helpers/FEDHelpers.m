@@ -25,6 +25,7 @@
 
 @implementation FEDExampleDelegator
 fed_use_proxy_for_delegate
+fed_use_proxy_for_property(strongDelegate,setStrongDelegate)
 
 -(int)parentOptionalMethodReturns42{
     return [self.delegate parentOptionalMethodReturns42];

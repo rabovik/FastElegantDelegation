@@ -177,8 +177,12 @@
 -(void)testDelegatorWorks{
     @autoreleasepool {
         self.delegator.delegate = self.strongDelegate;
+        self.delegator.strongDelegate = [FEDExampleDelegate new];
     }
     STAssertTrue(42 == [self.delegator parentOptionalMethodReturns42], @"");
+    STAssertTrue(42 == [self.delegator.strongDelegate parentOptionalMethodReturns42],@"");
+    STAssertNoThrow([self.delegator.delegate parentOptionalMethod], @"");
+    STAssertNoThrow([self.delegator.strongDelegate parentOptionalMethod], @"");
 }
 
 @end
