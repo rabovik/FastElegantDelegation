@@ -14,7 +14,7 @@
 		1AE8CE94171E8E9400743023 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1AE8CE92171E8E9400743023 /* InfoPlist.strings */; };
 		1AE8CE97171E8E9400743023 /* FEDTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AE8CE96171E8E9400743023 /* FEDTests.m */; };
 		1AE8CEA0171E90A000743023 /* FEDProxy.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1AE8CE9F171E90A000743023 /* FEDProxy.mm */; };
-		1AE8CEA5171E947F00743023 /* FEDUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AE8CEA4171E947F00743023 /* FEDUtils.m */; };
+		1AE8CEA5171E947F00743023 /* FEDRuntime.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AE8CEA4171E947F00743023 /* FEDRuntime.m */; };
 		1AE8CEAC171E956600743023 /* FEDProxyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AE8CEAB171E956600743023 /* FEDProxyTests.m */; };
 		1AE8CEB2171E969E00743023 /* FEDHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AE8CEB1171E969D00743023 /* FEDHelpers.m */; };
 		1AE8CEC1171EA30900743023 /* MARTNSObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AE8CEB6171EA30900743023 /* MARTNSObject.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -41,8 +41,8 @@
 		1AE8CE9C171E907600743023 /* FEDelegation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FEDelegation.h; sourceTree = "<group>"; };
 		1AE8CE9E171E90A000743023 /* FEDProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FEDProxy.h; path = Proxy/FEDProxy.h; sourceTree = "<group>"; };
 		1AE8CE9F171E90A000743023 /* FEDProxy.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = FEDProxy.mm; path = Proxy/FEDProxy.mm; sourceTree = "<group>"; };
-		1AE8CEA3171E947F00743023 /* FEDUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FEDUtils.h; path = Utils/FEDUtils.h; sourceTree = "<group>"; };
-		1AE8CEA4171E947F00743023 /* FEDUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FEDUtils.m; path = Utils/FEDUtils.m; sourceTree = "<group>"; };
+		1AE8CEA3171E947F00743023 /* FEDRuntime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FEDRuntime.h; path = Utils/FEDRuntime.h; sourceTree = "<group>"; };
+		1AE8CEA4171E947F00743023 /* FEDRuntime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FEDRuntime.m; path = Utils/FEDRuntime.m; sourceTree = "<group>"; };
 		1AE8CEAB171E956600743023 /* FEDProxyTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FEDProxyTests.m; path = Proxy/FEDProxyTests.m; sourceTree = "<group>"; };
 		1AE8CEB0171E969D00743023 /* FEDHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FEDHelpers.h; path = Helpers/FEDHelpers.h; sourceTree = "<group>"; };
 		1AE8CEB1171E969D00743023 /* FEDHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FEDHelpers.m; path = Helpers/FEDHelpers.m; sourceTree = "<group>"; };
@@ -165,8 +165,8 @@
 		1AE8CEA2171E945200743023 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				1AE8CEA3171E947F00743023 /* FEDUtils.h */,
-				1AE8CEA4171E947F00743023 /* FEDUtils.m */,
+				1AE8CEA3171E947F00743023 /* FEDRuntime.h */,
+				1AE8CEA4171E947F00743023 /* FEDRuntime.m */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -298,7 +298,7 @@
 			files = (
 				1AE8CE97171E8E9400743023 /* FEDTests.m in Sources */,
 				1AE8CEA0171E90A000743023 /* FEDProxy.mm in Sources */,
-				1AE8CEA5171E947F00743023 /* FEDUtils.m in Sources */,
+				1AE8CEA5171E947F00743023 /* FEDRuntime.m in Sources */,
 				1AE8CEAC171E956600743023 /* FEDProxyTests.m in Sources */,
 				1AE8CEB2171E969E00743023 /* FEDHelpers.m in Sources */,
 				1AE8CEC1171EA30900743023 /* MARTNSObject.m in Sources */,

@@ -8,7 +8,7 @@
 
 #import <SenTestingKit/SenTestingKit.h>
 #import "FEDelegation.h"
-#import "FEDUtils.h"
+#import "FEDRuntime.h"
 
 #import "FEDHelpers.h"
 

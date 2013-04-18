@@ -7,7 +7,6 @@
 //
 
 #import "FEDProxy.h"
-#import "FEDUtils.h"
 #import "MARTNSObject.h"
 #import "RTMethod.h"
 #import "RTProtocol.h"
