@@ -16,6 +16,7 @@
 
 #define FEDPROXY_IVARS \
     __weak id _delegate; \
+    id _strongDelegate; \
     Protocol *_protocol; \
     std::unordered_map<SEL,id> _signatures; \
     std::unordered_set<SEL> _delegateSelectors; \
@@ -143,6 +144,10 @@
     _protocol = objcProtocol;
     
     [self fed_prepareSelectorsCache];
+    
+    if (retainDelegate) {
+        _strongDelegate = delegate;
+    }
     
     if (retainedByDelegate) {
         static char key;
