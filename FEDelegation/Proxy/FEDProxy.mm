@@ -228,4 +228,9 @@
     return NO;
 }
 
+#pragma mark - Real delegate getter
+-(id)fed_realDelegate{
+    return _delegate;
+}
+
 @end

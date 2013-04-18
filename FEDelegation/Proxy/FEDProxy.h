@@ -28,8 +28,11 @@
                                            protocol:protocol                             \
                                      retainDelegate:YES];                                \
     }                                                                                    \
+}                                                                                        \
+-(id)GETTER{                                                                             \
+    [(FEDProxy *)_fed_##GETTER fed_realDelegate];                                        \
+    return _fed_##GETTER;                                                                \
 }
-
 
 @interface FEDProxy : NSProxy
 
@@ -44,5 +47,6 @@
 +(id)proxyWithDelegate:(id)delegate
               protocol:(Protocol *)protocol
         retainDelegate:(BOOL)retainDelegate;
+-(id)fed_realDelegate;
 
 @end
