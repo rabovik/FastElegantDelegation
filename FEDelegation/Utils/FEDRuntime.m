@@ -48,6 +48,16 @@
     return (RTPropertySetterSemanticsAssign == property.setterSemantics);
 }
 
++(void)associateRetainedObject:(id)object toObject:(id)target withKey:(void *)key{
+    objc_setAssociatedObject(target, key, object, OBJC_ASSOCIATION_RETAIN);
+}
+
++(id)associatedObjectFromTarget:(id)target withKey:(void *)key{
+    return objc_getAssociatedObject(target, key);
+}
+
+
+
 #if __IPHONE_OS_VERSION_MIN_REQUIRED < 60000
 +(BOOL)proxyIsWeakCompatible{
     static BOOL compatible;
