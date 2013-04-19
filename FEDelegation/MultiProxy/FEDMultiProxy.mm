@@ -14,6 +14,10 @@
 #import <vector>
 #import <unordered_map>
 
+#if !__has_feature(objc_arc)
+#error This code needs ARC. Use compiler option -fobjc-arc
+#endif
+
 #define FED_MULTIPROXY_IVARS                                                             \
     Protocol *_protocol;                                                                 \
     dispatch_block_t _onDeallocBlock;                                                    \

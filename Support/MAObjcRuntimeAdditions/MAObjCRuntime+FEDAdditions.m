@@ -9,6 +9,10 @@
 #import "MAObjCRuntime+FEDAdditions.h"
 #import "RTMethod.h"
 
+#if __has_feature(objc_arc)
+#error This code needs ARC disabled. Use compiler option -fno-objc-arc
+#endif
+
 @interface RTProtocol()
 - (Protocol *)objCProtocol;
 @end

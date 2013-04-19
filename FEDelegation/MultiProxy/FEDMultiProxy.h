@@ -8,6 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
+#if !__has_feature(objc_arc)
+#error This code needs ARC. Use compiler option -fobjc-arc
+#endif
+
 #define fed_synthesize_multi_delegates(PROTOCOL)                                    \
     fed_synthesize_multiproxy(PROTOCOL,addDelegate,removeDelegate,delegates)
 

@@ -13,6 +13,10 @@
 #import "MARTNSObject.h"
 #import "MAObjCRuntime+FEDAdditions.h"
 
+#if !__has_feature(objc_arc)
+#error This code needs ARC. Use compiler option -fobjc-arc
+#endif
+
 @implementation FEDRuntime
 
 +(Protocol *)protocolFromProperty:(NSString *)propertyName object:(id)object{

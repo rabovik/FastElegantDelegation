@@ -13,6 +13,10 @@
 #import <unordered_map>
 #import <unordered_set>
 
+#if !__has_feature(objc_arc)
+#error This code needs ARC. Use compiler option -fobjc-arc
+#endif
+
 #define FED_PROXY_IVARS                                                                  \
     __weak id _delegate;                                                                 \
     id _strongDelegate;                                                                  \
