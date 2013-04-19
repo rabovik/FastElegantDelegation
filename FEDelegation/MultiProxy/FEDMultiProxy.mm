@@ -19,7 +19,8 @@
     dispatch_block_t _onDeallocBlock;                                                    \
     std::vector<__weak id> _delegates;                                                   \
     NSMutableArray *_strongDelegates;                                                    \
-    std::unordered_map<SEL,id> _signatures;
+    std::unordered_map<SEL,id> _signatures;                                              \
+    NSMutableArray *_mappedArray;
 
 #pragma mark - IOS 5 HACK -
 #if __IPHONE_OS_VERSION_MIN_REQUIRED < 60000
@@ -175,11 +176,23 @@
 }
 
 -(void)forwardInvocation:(NSInvocation *)invocation{
-    BOOL voidReturnType = (0 == strcmp("v", invocation.methodSignature.methodReturnType));
+    BOOL voidReturnType =
+        (0 == strcmp("v", invocation.methodSignature.methodReturnType));
+    BOOL objectReturnType =
+        (0 == strcmp("@", invocation.methodSignature.methodReturnType));
+    // todo: check objectReturnType if nil != _mappedArray
     for (id delegate in self.fed_realDelegates) {
         if ([delegate respondsToSelector:invocation.selector]) {
             [invocation invokeWithTarget:delegate];
-            if (!voidReturnType) break;
+            if (!voidReturnType) {
+                if (nil != _mappedArray) {
+                    id result;
+                    [invocation getReturnValue:&result];
+                    [_mappedArray addObject:result];
+                }else{
+                    break;
+                }
+            }
         }
     }
 }
@@ -195,7 +208,7 @@
 
 #pragma mark - Mapping
 -(id)mapToArray:(NSMutableArray *)array{
-    
+    _mappedArray = array;
     return self;
 }
 
