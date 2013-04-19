@@ -52,3 +52,14 @@
 -(NSArray *)names;
 -(NSUInteger)maxAge;
 @end
+
+@protocol FEDExampleFlattenProtocol <NSObject>
+@optional
+-(NSSet *)sampleSet;
+-(NSArray *)sampleArray;
+@end
+
+@interface FEDExampleFlattenSetDelegate : NSObject<FEDExampleFlattenProtocol>
+@end
+@interface FEDExampleFlattenArrayDelegate : NSObject<FEDExampleFlattenProtocol>
+@end

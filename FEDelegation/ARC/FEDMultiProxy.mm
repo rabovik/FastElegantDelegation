@@ -25,6 +25,7 @@
     NSMutableArray *_strongDelegates;                                                    \
     std::unordered_map<SEL,id> _signatures;                                              \
     NSArray *__strong * _mappedArrayRef;                                                 \
+    BOOL _flattenMappedArray;                                                            \
     void(^_mappedBlock)(NSInvocation *);
 
 #pragma mark - IOS 5 HACK -
@@ -229,6 +230,20 @@
             if (nil != mappedArray) {
                 __unsafe_unretained id result;
                 [invocation getReturnValue:&result];
+                if (_flattenMappedArray) {
+                    if ([result isKindOfClass:[NSArray class]]
+                        || [result isKindOfClass:[NSMutableArray class]])
+                    {
+                        [mappedArray addObjectsFromArray:result];
+                        continue;
+                    }
+                    if ([result isKindOfClass:[NSSet class]]
+                        || [result isKindOfClass:[NSMutableSet class]])
+                    {
+                        [mappedArray addObjectsFromArray:[result allObjects]];
+                        continue;
+                    }
+                }
                 [mappedArray addObject:result];
                 continue;
             }
@@ -258,7 +273,12 @@
 
 #pragma mark - Mapping
 -(id)mapToArray:(NSArray *__strong *)arrayRef{
+    return [self mapToArray:arrayRef flatten:NO];
+}
+
+-(id)mapToArray:(NSArray *__strong *)arrayRef flatten:(BOOL)flatten{
     _mappedArrayRef = arrayRef;
+    _flattenMappedArray = flatten;
     return self;
 }
 
@@ -266,8 +286,5 @@
     _mappedBlock = [block copy];
     return self;
 }
-
-
-
 
 @end

@@ -76,3 +76,15 @@ fed_synthesize_multi_delegates(FEDExamplePersonProtocol)
 }
 
 @end
+
+@implementation FEDExampleFlattenSetDelegate
+-(NSSet *)sampleSet{
+    return [NSSet setWithObjects:@1,@2, nil];
+}
+@end
+
+@implementation FEDExampleFlattenArrayDelegate
+-(NSArray *)sampleArray{
+    return [NSArray arrayWithObjects:@3,@4, nil];
+}
+@end

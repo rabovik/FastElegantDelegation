@@ -47,6 +47,7 @@
         retainDelegates:(BOOL)retainDelegates;
 -(NSArray *)fed_realDelegates;
 -(id)mapToArray:(NSArray *__strong *)array;
+-(id)mapToArray:(NSArray *__strong *)array flatten:(BOOL)flatten;
 -(id)mapToBlock:(void(^)(NSInvocation *invocation))block;
 -(void)addDelegate:(id)delegate;
 -(void)removeDelegate:(id)delegate;

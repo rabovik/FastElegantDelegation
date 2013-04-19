@@ -96,4 +96,16 @@
     STAssertNil(strongArray, @"");
 }
 
+-(void)testFlattenMappedArray{
+    id proxy = [FEDMultiProxy proxyWithDelegates:@[[FEDExampleFlattenSetDelegate new],
+                                                   [FEDExampleFlattenArrayDelegate new]]
+                                        protocol:@protocol(FEDExampleFlattenProtocol)
+                                 retainDelegates:NO];
+    NSArray *array;
+    [[proxy mapToArray:&array flatten:YES] sampleArray];
+    STAssertTrue(([array isEqualToArray:@[@3,@4]]), @"");
+    [[proxy mapToArray:&array flatten:YES] sampleSet];
+    STAssertTrue(([array isEqualToArray:@[@1,@2]]), @"%@",array);
+}
+
 @end
