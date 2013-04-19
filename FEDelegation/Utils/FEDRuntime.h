@@ -13,4 +13,9 @@
 +(Protocol *)protocolFromProperty:(NSString *)propertyName object:(id)object;
 +(BOOL)propertyIsWeak:(NSString *)propertyName object:(id)object;
 
+#if __IPHONE_OS_VERSION_MIN_REQUIRED < 60000
++(BOOL)proxyIsWeakCompatible;
++(void)replicateMethodsFromClass:(Class)fromClass toClass:(Class)toClass;
+#endif
+
 @end

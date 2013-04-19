@@ -48,5 +48,34 @@
     return (RTPropertySetterSemanticsAssign == property.setterSemantics);
 }
 
+#if __IPHONE_OS_VERSION_MIN_REQUIRED < 60000
++(BOOL)proxyIsWeakCompatible{
+    static BOOL compatible;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        // On iOS5 we need to check if proxy is compatible with weak references.
+        // If no then our proxy will be inherited from NSObject instead of NSProxy.
+        // See bug in iOS 5: http://stackoverflow.com/questions/13800136/nsproxy-weak-reference-bug-under-arc-on-ios-5
+        id proxy = [NSProxy alloc];
+        __weak id weakProxy = proxy;
+        id strongProxy = weakProxy;
+        compatible = (nil != strongProxy);
+    });
+    return compatible;
+}
+
++(void)replicateMethodsFromClass:(Class)fromClass toClass:(Class)toClass{
+    unsigned int count;
+    Method *objCMethods = class_copyMethodList(fromClass, &count);
+    NSMutableArray *methods = [NSMutableArray array];
+    for(unsigned i = 0; i < count; i++){
+        [methods addObject: [RTMethod methodWithObjCMethod: objCMethods[i]]];
+    }
+    free(objCMethods);
+    for (RTMethod *method in methods) {
+        [toClass rt_addMethod:method];
+    }
+}
+#endif
 
 @end

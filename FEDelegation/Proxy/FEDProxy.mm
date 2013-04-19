@@ -7,69 +7,46 @@
 //
 
 #import "FEDProxy.h"
-#import "MARTNSObject.h"
 #import "RTMethod.h"
 #import "RTProtocol.h"
 #import "MAObjCRuntime+FEDAdditions.h"
 #import <unordered_map>
 #import <unordered_set>
 
-#define FEDPROXY_IVARS \
-    __weak id _delegate; \
-    id _strongDelegate; \
-    Protocol *_protocol; \
-    std::unordered_map<SEL,id> _signatures; \
-    std::unordered_set<SEL> _delegateSelectors; \
+#define FED_PROXY_IVARS                                                                  \
+    __weak id _delegate;                                                                 \
+    id _strongDelegate;                                                                  \
+    Protocol *_protocol;                                                                 \
+    std::unordered_map<SEL,id> _signatures;                                              \
+    std::unordered_set<SEL> _delegateSelectors;                                          \
     dispatch_block_t _onDeallocBlock;
 
+#pragma mark - IOS 5 HACK -
 #if __IPHONE_OS_VERSION_MIN_REQUIRED < 60000
-#define FED_USE_IOS5_CLASS_REPLACEMENT_HACK 1
 @interface FEDProxy_IOS5 : NSObject
 @end
 @implementation FEDProxy_IOS5{
-    FEDPROXY_IVARS
+    FED_PROXY_IVARS
 }
 +(void)initialize{
-    unsigned int count;
-    Method *objCMethods = class_copyMethodList([FEDProxy class], &count);
-    NSMutableArray *methods = [NSMutableArray array];
-    for(unsigned i = 0; i < count; i++){
-        [methods addObject: [RTMethod methodWithObjCMethod: objCMethods[i]]];
-    }
-    free(objCMethods);
-    for (RTMethod *method in methods) {
-        [self rt_addMethod:method];
-    }
+    [FEDRuntime replicateMethodsFromClass:[FEDProxy class] toClass:self];
 }
 @end
 #endif
 
+#pragma mark - PROXY -
 @implementation FEDProxy{
-    FEDPROXY_IVARS
+    FED_PROXY_IVARS
 }
 
 #pragma mark - Init
 +(Class)proxyClass{
-#ifdef FED_USE_IOS5_CLASS_REPLACEMENT_HACK
-    static Class proxyClass;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        // On iOS5 we need to check if proxy is compatible with weak references.
-        // If no then our proxy will be inherited from NSObject instead of NSProxy.
-        // See bug in iOS 5: http://stackoverflow.com/questions/13800136/nsproxy-weak-reference-bug-under-arc-on-ios-5
-        id proxy = [NSProxy alloc];
-        __weak id weakProxy = proxy;
-        id strongProxy = weakProxy;
-        if (strongProxy) {
-            proxyClass = self;
-        }else{
-            proxyClass = [FEDProxy_IOS5 class];
-        }
-    });
-    return proxyClass;
-#else
-    return self;
+#if __IPHONE_OS_VERSION_MIN_REQUIRED < 60000
+    if (![FEDRuntime proxyIsWeakCompatible]) {
+        return [FEDProxy_IOS5 class];
+    }
 #endif
+    return self;
 }
 
 +(id)proxyWithDelegate:(id)delegate protocol:(Protocol *)protocol{
@@ -121,7 +98,7 @@
              onDealloc:(dispatch_block_t)block
 {
     FEDProxy *proxy = [[self proxyClass] alloc];
-#ifdef FED_USE_IOS5_CLASS_REPLACEMENT_HACK
+#if __IPHONE_OS_VERSION_MIN_REQUIRED < 60000
     if ([self proxyClass] == [FEDProxy_IOS5 class]) {
         proxy = [(id)proxy init];
     }
@@ -134,11 +111,11 @@
     return proxy;
 }
 
--(id)fed_initWithDelegate:(id)delegate
-                 protocol:(Protocol *)objcProtocol
-           retainDelegate:(BOOL)retainDelegate
-       retainedByDelegate:(BOOL)retainedByDelegate
-                onDealloc:(dispatch_block_t)block
+-(void)fed_initWithDelegate:(id)delegate
+                   protocol:(Protocol *)objcProtocol
+             retainDelegate:(BOOL)retainDelegate
+         retainedByDelegate:(BOOL)retainedByDelegate
+                  onDealloc:(dispatch_block_t)block
 {
     _delegate = delegate;
     _protocol = objcProtocol;
@@ -154,9 +131,7 @@
         objc_setAssociatedObject(delegate, &key, self, OBJC_ASSOCIATION_RETAIN);
     }
     
-    _onDeallocBlock = block;
-    
-    return self;
+    _onDeallocBlock = [block copy];
 }
 
 -(void)fed_prepareSelectorsCache{
