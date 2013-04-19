@@ -36,3 +36,19 @@
 @property (nonatomic,weak) id<FEDExampleProtocol> delegate;
 @property (nonatomic,strong) id<FEDExampleProtocol> strongDelegate;
 @end
+
+@protocol FEDExamplePersonProtocol<NSObject>
+-(NSString *)name;
+-(NSUInteger)age;
+@end
+
+@interface FEDExamplePerson : NSObject<FEDExamplePersonProtocol>
++(id)personWithName:(NSString *)name age:(NSUInteger)age;
+@end
+
+@interface FEDExampleMultiDelegator : NSObject
+-(void)addDelegate:(id<FEDExampleProtocol>)delegate;
+-(void)removeDelegate:(id<FEDExampleProtocol>)delegate;
+-(NSArray *)names;
+-(NSUInteger)maxAge;
+@end
