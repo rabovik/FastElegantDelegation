@@ -18,5 +18,6 @@
                protocol:(Protocol *)protocol
         retainDelegates:(BOOL)retainDelegates;
 -(NSArray *)fed_realDelegates;
+-(id)mapToArray:(NSMutableArray *)array;
 
 @end

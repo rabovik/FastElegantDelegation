@@ -193,6 +193,12 @@
     return NO;
 }
 
+#pragma mark - Mapping
+-(id)mapToArray:(NSMutableArray *)array{
+    
+    return self;
+}
+
 
 
 @end

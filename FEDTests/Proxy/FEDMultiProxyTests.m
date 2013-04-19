@@ -27,13 +27,20 @@
     STAssertTrue(1 == proxy.fed_realDelegates.count, @"");
 }
 
--(void)testReturnFirstValue{
+-(void)testMultiProxy{
     FEDExamplePerson *bob = [FEDExamplePerson personWithName:@"Bob" age:30];
+    FEDExamplePerson *john = [FEDExamplePerson personWithName:@"John" age:40];
     FEDExamplePerson *alice = [FEDExamplePerson personWithName:@"Alice" age:20];
-    id proxy = [FEDMultiProxy proxyWithDelegates:@[[NSObject new],bob,alice]
-                                        protocol:@protocol(FEDExamplePersonProtocol)
-                                 retainDelegates:NO];
+    id proxy = [FEDMultiProxy
+                proxyWithDelegates:@[[NSObject new],bob,john,@"Some string",alice]
+                protocol:@protocol(FEDExamplePersonProtocol)
+                retainDelegates:NO];
+    // test return first value
     STAssertTrue(30 == [proxy age], @"");
+    // test mapToArray
+    NSMutableArray *array = [NSMutableArray array];
+    [[proxy mapToArray:array] name];
+    STAssertTrue(([array isEqualToArray:@[@"Bob",@"John",@"Alice"]]), @"");
 }
 
 @end
