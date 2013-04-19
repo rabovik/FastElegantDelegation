@@ -41,10 +41,10 @@
     NSMutableArray *array = [NSMutableArray array];
     [[proxy mapToArray:array] name];
     STAssertTrue(([array isEqualToArray:@[@"Bob",@"John",@"Alice"]]), @"");
-    array = nil;
     // test returns first after previous mapToArray
     STAssertTrue([@"Bob" isEqualToString:[proxy name]], @"");
     // test mapToArray with incorrect method signature
+    array = [NSMutableArray array];
     STAssertThrows([[proxy mapToArray:array] age], @"");
 }
 

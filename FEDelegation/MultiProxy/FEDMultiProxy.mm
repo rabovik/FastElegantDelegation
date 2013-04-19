@@ -176,11 +176,17 @@
 }
 
 -(void)forwardInvocation:(NSInvocation *)invocation{
-    BOOL voidReturnType =
-        (0 == strcmp("v", invocation.methodSignature.methodReturnType));
-    BOOL objectReturnType =
-        (0 == strcmp("@", invocation.methodSignature.methodReturnType));
-    // todo: check objectReturnType if nil != _mappedArray
+    const char *returnType = invocation.methodSignature.methodReturnType;
+    BOOL voidReturnType = (0 == strncmp("v", returnType, 1));
+    BOOL objectReturnType = (0 == strncmp("@", returnType, 1));
+    if (!objectReturnType && nil != _mappedArray) {
+        @throw [NSException
+                exceptionWithName:@"FEDMultiProxyException"
+                reason:[NSString stringWithFormat:
+                        @"Can not map to array with return type %s",
+                        returnType]
+                userInfo:nil];
+    }
     for (id delegate in self.fed_realDelegates) {
         if ([delegate respondsToSelector:invocation.selector]) {
             [invocation invokeWithTarget:delegate];
@@ -195,6 +201,7 @@
             }
         }
     }
+    _mappedArray = nil;
 }
 
 -(BOOL)respondsToSelector:(SEL)selector{
