@@ -168,6 +168,14 @@
     return array;
 }
 
+-(void)addDelegate:(id)delegate{
+    
+}
+
+-(void)removeDelegate{
+    
+}
+
 #pragma mark - Forwarding
 -(NSMethodSignature *)methodSignatureForSelector:(SEL)selector{
     auto pair = _signatures.find(selector);
