@@ -11,7 +11,8 @@
 
 #define FED_MULTIPROXY_IVARS                                                             \
     Protocol *_protocol;                                                                 \
-    dispatch_block_t _onDeallocBlock;
+    dispatch_block_t _onDeallocBlock;                                                    \
+    
 
 #pragma mark - IOS 5 HACK -
 #if __IPHONE_OS_VERSION_MIN_REQUIRED < 60000
@@ -108,6 +109,12 @@
 -(void)dealloc{
     if (_onDeallocBlock) _onDeallocBlock();
 }
+
+#pragma mark - Delegates menagement
+-(NSArray *)fed_realDelegates{
+    return nil;
+}
+
 
 
 @end

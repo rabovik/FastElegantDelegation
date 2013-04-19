@@ -17,5 +17,6 @@
 +(id)proxyWithDelegates:(NSArray *)delegates
                protocol:(Protocol *)protocol
         retainDelegates:(BOOL)retainDelegates;
+-(NSArray *)fed_realDelegates;
 
 @end
