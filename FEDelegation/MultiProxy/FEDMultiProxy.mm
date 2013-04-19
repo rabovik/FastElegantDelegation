@@ -114,7 +114,7 @@
     if (_onDeallocBlock) _onDeallocBlock();
 }
 
-#pragma mark - Delegates menagement
+#pragma mark - Delegates management
 -(NSArray *)fed_realDelegates{
     NSMutableArray *array = [NSMutableArray array];
     // construct array and clean dead delagates from vector
