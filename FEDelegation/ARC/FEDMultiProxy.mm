@@ -227,7 +227,7 @@
                 continue;
             }
             if (nil != mappedArray) {
-                id result;
+                __unsafe_unretained id result;
                 [invocation getReturnValue:&result];
                 [mappedArray addObject:result];
                 continue;
