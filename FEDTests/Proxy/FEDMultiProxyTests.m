@@ -54,6 +54,8 @@
         [invocation getReturnValue:&age];
         STAssertTrue((age == [ages[iteration++] unsignedIntegerValue]), @"");
     }] age];
+    // test returns first after previous mapToBlock
+    STAssertTrue([@"Bob" isEqualToString:[proxy name]], @"");
 }
 
 @end
