@@ -8,11 +8,12 @@
 
 #import "FEDMultiProxy.h"
 #import "FEDRuntime.h"
+#import <vector>
 
 #define FED_MULTIPROXY_IVARS                                                             \
     Protocol *_protocol;                                                                 \
     dispatch_block_t _onDeallocBlock;                                                    \
-    
+    std::vector<__weak id> _delegates;
 
 #pragma mark - IOS 5 HACK -
 #if __IPHONE_OS_VERSION_MIN_REQUIRED < 60000
@@ -94,6 +95,9 @@
     _protocol = protocol;
     
     // ... delegates
+    for (id delegate in delegates) {
+        _delegates.push_back(delegate);
+    }
     
     if (retainDelegates) {
         // ...
@@ -112,7 +116,20 @@
 
 #pragma mark - Delegates menagement
 -(NSArray *)fed_realDelegates{
-    return nil;
+    NSMutableArray *array = [NSMutableArray array];
+    // construct array and clean dead delagates from vector
+    _delegates.erase(std::remove_if(_delegates.begin(),
+                                    _delegates.end(),
+                                    [array](id delegate) -> bool {
+                                        if (nil != delegate) {
+                                            [array addObject:delegate];
+                                            return false;
+                                        }else{
+                                            return true;
+                                        }
+                                    }),
+                     _delegates.end());
+    return array;
 }
 
 
