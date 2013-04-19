@@ -63,19 +63,19 @@
     FEDExamplePerson *john = [FEDExamplePerson personWithName:@"John" age:40];
     FEDExamplePerson *alice = [FEDExamplePerson personWithName:@"Alice" age:20];
     FEDExampleMultiDelegator *delegator = [FEDExampleMultiDelegator new];
-    [delegator addPerson:bob];
-    [delegator addPerson:john];
-    [delegator addPerson:alice];
+    [delegator addDelegate:bob];
+    [delegator addDelegate:john];
+    [delegator addDelegate:alice];
     STAssertTrue(([@[@"Bob",@"John",@"Alice"] isEqualToArray:[delegator names]]),@"");
     STAssertTrue(40 == [delegator maxAge],@"");
-    [delegator removePerson:john];
+    [delegator removeDelegate:john];
     STAssertTrue(([@[@"Bob",@"Alice"] isEqualToArray:[delegator names]]),@"");
     STAssertTrue(30 == [delegator maxAge],@"");
-    [delegator removePerson:bob];
-    [delegator removePerson:alice];
+    [delegator removeDelegate:bob];
+    [delegator removeDelegate:alice];
     STAssertTrue(([@[] isEqualToArray:[delegator names]]),@"");
     STAssertTrue(0 == [delegator maxAge],@"");
-    [delegator addPerson:alice];
+    [delegator addDelegate:alice];
     STAssertTrue(([@[@"Alice"] isEqualToArray:[delegator names]]),@"");
     STAssertTrue(20 == [delegator maxAge],@"");
 }

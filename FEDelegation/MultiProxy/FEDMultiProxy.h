@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
+#define fed_synthesize_multi_delegates(PROTOCOL)                                    \
+    fed_synthesize_multiproxy(PROTOCOL,addDelegate,removeDelegate,delegates)
+
 #define fed_synthesize_multiproxy(PROTOCOL,ADD,REMOVE,PROXY_GETTER)                      \
 -(void)ADD:(id<PROTOCOL>)delegate{                                                       \
     [self.PROXY_GETTER addDelegate:delegate];                                            \

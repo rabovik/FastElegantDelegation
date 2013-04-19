@@ -47,8 +47,8 @@
 @end
 
 @interface FEDExampleMultiDelegator : NSObject
--(void)addPerson:(id<FEDExamplePersonProtocol>)person;
--(void)removePerson:(id<FEDExamplePersonProtocol>)person;
+-(void)addDelegate:(id<FEDExamplePersonProtocol>)person;
+-(void)removeDelegate:(id<FEDExamplePersonProtocol>)person;
 -(NSArray *)names;
 -(NSUInteger)maxAge;
 @end
