@@ -120,7 +120,7 @@
     // construct array and clean dead delagates from vector
     _delegates.erase(std::remove_if(_delegates.begin(),
                                     _delegates.end(),
-                                    [array](id delegate) -> bool {
+                                    [&array](id delegate) -> bool {
                                         if (nil != delegate) {
                                             [array addObject:delegate];
                                             return false;
