@@ -19,5 +19,6 @@
         retainDelegates:(BOOL)retainDelegates;
 -(NSArray *)fed_realDelegates;
 -(id)mapToArray:(NSMutableArray *)array;
+-(id)mapToBlock:(void(^)(NSInvocation *invocation))block;
 
 @end

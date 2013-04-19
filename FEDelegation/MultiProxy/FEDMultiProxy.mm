@@ -20,7 +20,8 @@
     std::vector<__weak id> _delegates;                                                   \
     NSMutableArray *_strongDelegates;                                                    \
     std::unordered_map<SEL,id> _signatures;                                              \
-    NSMutableArray *_mappedArray;
+    NSMutableArray *_mappedArray;                                                        \
+    void(^_mappedBlock)(NSInvocation *);
 
 #pragma mark - IOS 5 HACK -
 #if __IPHONE_OS_VERSION_MIN_REQUIRED < 60000
@@ -180,6 +181,7 @@
     BOOL voidReturnType = (0 == strncmp("v", returnType, 1));
     BOOL objectReturnType = (0 == strncmp("@", returnType, 1));
     if (!objectReturnType && nil != _mappedArray) {
+        _mappedArray = nil;
         @throw [NSException
                 exceptionWithName:@"FEDMultiProxyException"
                 reason:[NSString stringWithFormat:
@@ -187,21 +189,31 @@
                         returnType]
                 userInfo:nil];
     }
+    BOOL invoked;
     for (id delegate in self.fed_realDelegates) {
         if ([delegate respondsToSelector:invocation.selector]) {
             [invocation invokeWithTarget:delegate];
+            invoked = YES;
+            if (nil != _mappedBlock){
+                _mappedBlock(invocation);
+                continue;
+            }
+            if (nil != _mappedArray) {
+                id result;
+                [invocation getReturnValue:&result];
+                [_mappedArray addObject:result];
+                continue;
+            }
             if (!voidReturnType) {
-                if (nil != _mappedArray) {
-                    id result;
-                    [invocation getReturnValue:&result];
-                    [_mappedArray addObject:result];
-                }else{
-                    break;
-                }
+                break;
             }
         }
     }
+    if (!invoked) {
+        [invocation invokeWithTarget:nil];
+    }
     _mappedArray = nil;
+    _mappedBlock = nil;
 }
 
 -(BOOL)respondsToSelector:(SEL)selector{
@@ -218,6 +230,12 @@
     _mappedArray = array;
     return self;
 }
+
+-(id)mapToBlock:(void(^)(NSInvocation *invocation))block{
+    _mappedBlock = [block copy];
+    return self;
+}
+
 
 
 

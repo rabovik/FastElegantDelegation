@@ -46,6 +46,14 @@
     // test mapToArray with incorrect method signature
     array = [NSMutableArray array];
     STAssertThrows([[proxy mapToArray:array] age], @"");
+    // test mapToBlock
+    __block int iteration = 0;
+    NSArray *ages = @[@30,@40,@20];
+    [[proxy mapToBlock:^(NSInvocation *invocation) {
+        NSUInteger age;
+        [invocation getReturnValue:&age];
+        STAssertTrue((age == [ages[iteration++] unsignedIntegerValue]), @"");
+    }] age];
 }
 
 @end
