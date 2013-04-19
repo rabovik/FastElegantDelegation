@@ -122,6 +122,25 @@
     STAssertNotNil(strongProxy, @"");
 }
 
+-(void)testTwoProxiesRetainedByOneDelegate{
+    __weak id weakProxy1;
+    __weak id weakProxy2;
+    @autoreleasepool {
+        id proxy1 = [FEDProxy proxyWithDelegate:self.strongDelegate
+                                       protocol:@protocol(FEDExampleProtocol)
+                             retainedByDelegate:YES];
+        id proxy2 = [FEDProxy proxyWithDelegate:self.strongDelegate
+                                       protocol:@protocol(FEDExampleProtocol)
+                             retainedByDelegate:YES];
+        weakProxy1 = proxy1;
+        weakProxy2 = proxy2;
+    }
+    id strongProxy1 = weakProxy1;
+    id strongProxy2 = weakProxy2;
+    STAssertNotNil(strongProxy1, @"");
+    STAssertNotNil(strongProxy2, @"");
+}
+
 -(void)testRetainDelegate{
     id proxy;
     @autoreleasepool {
