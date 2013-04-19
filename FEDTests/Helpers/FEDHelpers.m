@@ -8,6 +8,7 @@
 
 #import "FEDHelpers.h"
 #import "FEDProxy.h"
+#import "FEDMultiProxy.h"
 
 @implementation FEDExampleDelegate
 
@@ -57,20 +58,40 @@ fed_use_proxy_for_property(strongDelegate,setStrongDelegate)
 
 @implementation FEDExampleMultiDelegator
 
--(void)addDelegate:(id<FEDExampleProtocol>)delegate{
-    
+-(id)delegates{
+    static char key;
+    id proxy;
+    @synchronized(self){
+        proxy = [FEDRuntime associatedObjectFromTarget:self withKey:&key];
+        if (nil == proxy) {
+            proxy = [FEDMultiProxy proxyWithProtocol:@protocol(FEDExamplePersonProtocol)];
+        }
+    }
+    return proxy;
 }
 
--(void)removeDelegate:(id<FEDExampleProtocol>)delegate{
-    
+-(void)addDelegate:(id<FEDExamplePersonProtocol>)delegate{
+    [self.delegates addDelegate:delegate];
+}
+
+-(void)removeDelegate:(id<FEDExamplePersonProtocol>)delegate{
+    [self.delegates removeDelegate:delegate];
 }
 
 -(NSArray *)names{
-    return nil;
+    NSMutableArray *array = [NSMutableArray array];
+    [[self.delegates mapToArray:array] name];
+    return array;
 }
 
 -(NSUInteger)maxAge{
-    return 0;
+    __block NSUInteger maxAge = 0;
+    [[self.delegates mapToBlock:^(NSInvocation *invocation) {
+        NSUInteger age;
+        [invocation getReturnValue:&age];
+        maxAge = MAX(maxAge,age);
+    }] age];
+    return maxAge;
 }
 
 @end
