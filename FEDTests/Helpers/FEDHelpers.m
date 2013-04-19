@@ -57,17 +57,17 @@ fed_use_proxy_for_property(strongDelegate,setStrongDelegate)
 @end
 
 @implementation FEDExampleMultiDelegator
-fed_synthesize_multiproxy(FEDExamplePersonProtocol,addDelegate,removeDelegate,delegates)
+fed_synthesize_multiproxy(FEDExamplePersonProtocol,addPerson,removePerson,persons)
 
 -(NSArray *)names{
     NSMutableArray *array = [NSMutableArray array];
-    [[self.delegates mapToArray:array] name];
+    [[self.persons mapToArray:array] name];
     return array;
 }
 
 -(NSUInteger)maxAge{
     __block NSUInteger maxAge = 0;
-    [[self.delegates mapToBlock:^(NSInvocation *invocation) {
+    [[self.persons mapToBlock:^(NSInvocation *invocation) {
         NSUInteger age;
         [invocation getReturnValue:&age];
         maxAge = MAX(maxAge,age);
