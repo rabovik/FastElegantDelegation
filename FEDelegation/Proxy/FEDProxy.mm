@@ -127,8 +127,7 @@
     }
     
     if (retainedByDelegate) {
-        static char key;
-        objc_setAssociatedObject(delegate, &key, self, OBJC_ASSOCIATION_RETAIN);
+        objc_setAssociatedObject(delegate, (__bridge void *)self, self, OBJC_ASSOCIATION_RETAIN);
     }
     
     _onDeallocBlock = [block copy];
