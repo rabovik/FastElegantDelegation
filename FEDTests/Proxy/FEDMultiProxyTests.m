@@ -58,4 +58,16 @@
     STAssertTrue([@"Bob" isEqualToString:[proxy name]], @"");
 }
 
+-(void)testDelegator{
+    FEDExamplePerson *bob = [FEDExamplePerson personWithName:@"Bob" age:30];
+    FEDExamplePerson *john = [FEDExamplePerson personWithName:@"John" age:40];
+    FEDExamplePerson *alice = [FEDExamplePerson personWithName:@"Alice" age:20];
+    FEDExampleMultiDelegator *delegator = [FEDExampleMultiDelegator new];
+    [delegator addDelegate:bob];
+    [delegator addDelegate:john];
+    [delegator addDelegate:alice];
+    STAssertTrue(([@[@"Bob",@"John",@"Alice"] isEqualToArray:[delegator names]]),@"");
+    STAssertTrue(40 == [delegator maxAge],@"");
+}
+
 @end
