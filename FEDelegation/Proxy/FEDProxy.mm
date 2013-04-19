@@ -153,10 +153,9 @@
         }
     }
     for (RTMethod *method in allMethods){
-        const char *types = [method.signature
-                             cStringUsingEncoding:NSUTF8StringEncoding];
-        _signatures[method.selector] = [NSMethodSignature signatureWithObjCTypes:types];
-    }    
+        _signatures[method.selector] =
+            [NSMethodSignature signatureWithObjCTypes:method.signature.UTF8String];
+    }
 }
 
 -(void)dealloc{
@@ -165,7 +164,7 @@
 
 #pragma mark - Forwarding
 -(id)forwardingTargetForSelector:(SEL)selector{
-    std::unordered_set<SEL>::const_iterator pair = _delegateSelectors.find(selector);
+    auto pair = _delegateSelectors.find(selector);
     if (pair != _delegateSelectors.end()) {
         id strongDelegate = _delegate;
         if (strongDelegate) {
@@ -176,7 +175,7 @@
 }
 
 -(NSMethodSignature *)methodSignatureForSelector:(SEL)selector{
-    std::unordered_map<SEL,id>::const_iterator pair = _signatures.find(selector);
+    auto pair = _signatures.find(selector);
     if (pair != _signatures.end()) {
         return pair->second;
     }else{
@@ -196,7 +195,9 @@
 }
 
 -(BOOL)respondsToSelector:(SEL)selector{
-    std::unordered_set<SEL>::const_iterator pair = _delegateSelectors.find(selector);
+    id strongDelegate = _delegate;
+    if (nil == strongDelegate) return NO;
+    auto pair = _delegateSelectors.find(selector);
     if (pair != _delegateSelectors.end()) {
         return YES;
     }
