@@ -27,4 +27,13 @@
     STAssertTrue(1 == proxy.fed_realDelegates.count, @"");
 }
 
+-(void)testReturnFirstValue{
+    FEDExamplePerson *bob = [FEDExamplePerson personWithName:@"Bob" age:30];
+    FEDExamplePerson *alice = [FEDExamplePerson personWithName:@"Alice" age:20];
+    id proxy = [FEDMultiProxy proxyWithDelegates:@[[NSObject new],bob,alice]
+                                        protocol:@protocol(FEDExamplePersonProtocol)
+                                 retainDelegates:NO];
+    STAssertTrue(30 == [proxy age], @"");
+}
+
 @end
