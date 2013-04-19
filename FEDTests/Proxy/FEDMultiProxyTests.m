@@ -38,14 +38,13 @@
     // test return first value
     STAssertTrue(30 == [proxy age], @"");
     // test mapToArray
-    NSMutableArray *array = [NSMutableArray array];
-    [[proxy mapToArray:array] name];
+    NSArray *array;
+    [[proxy mapToArray:&array] name];
     STAssertTrue(([array isEqualToArray:@[@"Bob",@"John",@"Alice"]]), @"");
     // test returns first after previous mapToArray
     STAssertTrue([@"Bob" isEqualToString:[proxy name]], @"");
     // test mapToArray with incorrect method signature
-    array = [NSMutableArray array];
-    STAssertThrows([[proxy mapToArray:array] age], @"");
+    STAssertThrows([[proxy mapToArray:&array] age], @"");
     // test mapToBlock
     __block int iteration = 0;
     NSArray *ages = @[@30,@40,@20];
@@ -78,6 +77,23 @@
     [delegator addDelegate:alice];
     STAssertTrue(([@[@"Alice"] isEqualToArray:[delegator names]]),@"");
     STAssertTrue(20 == [delegator maxAge],@"");
+}
+
+-(void)testMapToArraySyntax{
+    __weak NSArray *weakArray;
+    @autoreleasepool {
+        FEDExamplePerson *bob = [FEDExamplePerson personWithName:@"Bob" age:30];
+        id proxy = [FEDMultiProxy
+                    proxyWithDelegates:@[bob]
+                    protocol:@protocol(FEDExamplePersonProtocol)
+                    retainDelegates:NO];
+        NSArray *array;
+        [[proxy mapToArray:&array] name];
+        STAssertTrue(([@[@"Bob"] isEqualToArray:array]), @"");
+        weakArray = array;
+    }
+    id strongArray = weakArray;
+    STAssertNil(strongArray, @"");
 }
 
 @end

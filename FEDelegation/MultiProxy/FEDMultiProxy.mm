@@ -20,7 +20,7 @@
     std::vector<__weak id> _delegates;                                                   \
     NSMutableArray *_strongDelegates;                                                    \
     std::unordered_map<SEL,id> _signatures;                                              \
-    NSMutableArray *_mappedArray;                                                        \
+    NSArray *__strong * _mappedArrayRef;                                                 \
     void(^_mappedBlock)(NSInvocation *);
 
 #pragma mark - IOS 5 HACK -
@@ -200,14 +200,18 @@
     const char *returnType = invocation.methodSignature.methodReturnType;
     BOOL voidReturnType = (0 == strncmp("v", returnType, 1));
     BOOL objectReturnType = (0 == strncmp("@", returnType, 1));
-    if (!objectReturnType && nil != _mappedArray) {
-        _mappedArray = nil;
-        @throw [NSException
-                exceptionWithName:@"FEDMultiProxyException"
-                reason:[NSString stringWithFormat:
-                        @"Can not map to array with return type %s",
-                        returnType]
-                userInfo:nil];
+    NSMutableArray *mappedArray;
+    if (NULL != _mappedArrayRef) {
+        if (!objectReturnType) {
+            _mappedArrayRef = NULL;
+            @throw [NSException
+                    exceptionWithName:@"FEDMultiProxyException"
+                    reason:[NSString stringWithFormat:
+                            @"Can not map to array with return type %s",
+                            returnType]
+                    userInfo:nil];
+        }
+        mappedArray = [NSMutableArray array];
     }
     BOOL invoked;
     for (id delegate in self.fed_realDelegates) {
@@ -218,10 +222,10 @@
                 _mappedBlock(invocation);
                 continue;
             }
-            if (nil != _mappedArray) {
+            if (nil != mappedArray) {
                 id result;
                 [invocation getReturnValue:&result];
-                [_mappedArray addObject:result];
+                [mappedArray addObject:result];
                 continue;
             }
             if (!voidReturnType) {
@@ -232,7 +236,10 @@
     if (!invoked) {
         [invocation invokeWithTarget:nil];
     }
-    _mappedArray = nil;
+    if (NULL != _mappedArrayRef) {
+        *_mappedArrayRef = mappedArray;
+        _mappedArrayRef = NULL;
+    }
     _mappedBlock = nil;
 }
 
@@ -246,8 +253,8 @@
 }
 
 #pragma mark - Mapping
--(id)mapToArray:(NSMutableArray *)array{
-    _mappedArray = array;
+-(id)mapToArray:(NSArray *__strong *)arrayRef{
+    _mappedArrayRef = arrayRef;
     return self;
 }
 

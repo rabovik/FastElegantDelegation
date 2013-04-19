@@ -60,8 +60,8 @@ fed_use_proxy_for_property(strongDelegate,setStrongDelegate)
 fed_synthesize_multi_delegates(FEDExamplePersonProtocol)
 
 -(NSArray *)names{
-    NSMutableArray *array = [NSMutableArray array];
-    [[[self delegates] mapToArray:array] name];
+    NSArray *array;
+    [[[self delegates] mapToArray:&array] name];
     return array;
 }
 

@@ -42,7 +42,7 @@
                protocol:(Protocol *)protocol
         retainDelegates:(BOOL)retainDelegates;
 -(NSArray *)fed_realDelegates;
--(id)mapToArray:(NSMutableArray *)array;
+-(id)mapToArray:(NSArray *__strong *)array;
 -(id)mapToBlock:(void(^)(NSInvocation *invocation))block;
 -(void)addDelegate:(id)delegate;
 -(void)removeDelegate:(id)delegate;
