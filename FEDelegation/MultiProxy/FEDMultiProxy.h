@@ -22,6 +22,6 @@
 -(id)mapToArray:(NSMutableArray *)array;
 -(id)mapToBlock:(void(^)(NSInvocation *invocation))block;
 -(void)addDelegate:(id)delegate;
--(void)removeDelegate;
+-(void)removeDelegate:(id)delegate;
 
 @end

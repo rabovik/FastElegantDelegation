@@ -169,11 +169,14 @@
 }
 
 -(void)addDelegate:(id)delegate{
-    
+    _delegates.push_back(delegate);
+    [_strongDelegates addObject:delegate];
 }
 
--(void)removeDelegate{
-    
+-(void)removeDelegate:(id)delegate{
+    _delegates.erase(std::remove(_delegates.begin(), _delegates.end(), delegate),
+                     _delegates.end());
+    [_strongDelegates removeObject:delegate];
 }
 
 #pragma mark - Forwarding

@@ -68,6 +68,16 @@
     [delegator addDelegate:alice];
     STAssertTrue(([@[@"Bob",@"John",@"Alice"] isEqualToArray:[delegator names]]),@"");
     STAssertTrue(40 == [delegator maxAge],@"");
+    [delegator removeDelegate:john];
+    STAssertTrue(([@[@"Bob",@"Alice"] isEqualToArray:[delegator names]]),@"");
+    STAssertTrue(30 == [delegator maxAge],@"");
+    [delegator removeDelegate:bob];
+    [delegator removeDelegate:alice];
+    STAssertTrue(([@[] isEqualToArray:[delegator names]]),@"");
+    STAssertTrue(0 == [delegator maxAge],@"");
+    [delegator addDelegate:alice];
+    STAssertTrue(([@[@"Alice"] isEqualToArray:[delegator names]]),@"");
+    STAssertTrue(20 == [delegator maxAge],@"");
 }
 
 @end

@@ -65,6 +65,7 @@ fed_use_proxy_for_property(strongDelegate,setStrongDelegate)
         proxy = [FEDRuntime associatedObjectFromTarget:self withKey:&key];
         if (nil == proxy) {
             proxy = [FEDMultiProxy proxyWithProtocol:@protocol(FEDExamplePersonProtocol)];
+            [FEDRuntime associateRetainedObject:proxy toObject:self withKey:&key];
         }
     }
     return proxy;
