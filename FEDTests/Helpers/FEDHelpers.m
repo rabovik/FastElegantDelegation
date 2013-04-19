@@ -57,27 +57,7 @@ fed_use_proxy_for_property(strongDelegate,setStrongDelegate)
 @end
 
 @implementation FEDExampleMultiDelegator
-
--(id)delegates{
-    static char key;
-    id proxy;
-    @synchronized(self){
-        proxy = [FEDRuntime associatedObjectFromTarget:self withKey:&key];
-        if (nil == proxy) {
-            proxy = [FEDMultiProxy proxyWithProtocol:@protocol(FEDExamplePersonProtocol)];
-            [FEDRuntime associateRetainedObject:proxy toObject:self withKey:&key];
-        }
-    }
-    return proxy;
-}
-
--(void)addDelegate:(id<FEDExamplePersonProtocol>)delegate{
-    [self.delegates addDelegate:delegate];
-}
-
--(void)removeDelegate:(id<FEDExamplePersonProtocol>)delegate{
-    [self.delegates removeDelegate:delegate];
-}
+fed_synthesize_multiproxy(FEDExamplePersonProtocol,addDelegate,removeDelegate,delegates)
 
 -(NSArray *)names{
     NSMutableArray *array = [NSMutableArray array];

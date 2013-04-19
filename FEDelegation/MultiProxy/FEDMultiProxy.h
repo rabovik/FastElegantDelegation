@@ -8,6 +8,26 @@
 
 #import <Foundation/Foundation.h>
 
+#define fed_synthesize_multiproxy(PROTOCOL,ADD,REMOVE,PROXY_GETTER)                     \
+-(void)ADD:(id<PROTOCOL>)delegate{                                  \
+    [self.PROXY_GETTER addDelegate:delegate];                                  \
+}                                  \
+-(void)REMOVE:(id<PROTOCOL>)delegate{                                  \
+    [self.delegates removeDelegate:delegate];                                  \
+}                                  \
+-(id)PROXY_GETTER{                                  \
+    static char key;                                  \
+    id proxy;                                  \
+    @synchronized(self){                                  \
+        proxy = [FEDRuntime associatedObjectFromTarget:self withKey:&key];                                  \
+        if (nil == proxy) {                                  \
+            proxy = [FEDMultiProxy proxyWithProtocol:@protocol(PROTOCOL)];                    \
+            [FEDRuntime associateRetainedObject:proxy toObject:self withKey:&key];                                 \
+        }                                  \
+    }                                  \
+    return proxy;                                  \
+}
+
 @interface FEDMultiProxy : NSProxy
 
 +(id)proxyWithProtocol:(Protocol *)protocol;
