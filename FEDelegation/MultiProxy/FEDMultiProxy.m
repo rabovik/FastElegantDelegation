@@ -105,5 +105,9 @@
     _onDeallocBlock = [block copy];
 }
 
+-(void)dealloc{
+    if (_onDeallocBlock) _onDeallocBlock();
+}
+
 
 @end
