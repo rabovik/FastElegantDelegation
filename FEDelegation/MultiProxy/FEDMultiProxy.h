@@ -10,6 +10,7 @@
 
 @interface FEDMultiProxy : NSProxy
 
++(id)proxyWithProtocol:(Protocol *)protocol;
 +(id)proxyWithDelegates:(NSArray *)delegates
                protocol:(Protocol *)protocol
     retainedByDelegates:(BOOL)retainedByDelegates

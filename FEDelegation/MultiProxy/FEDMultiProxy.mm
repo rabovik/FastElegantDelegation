@@ -51,6 +51,15 @@
     return self;
 }
 
++(id)proxyWithProtocol:(Protocol *)protocol{
+    return [self proxyWithDelegates:nil
+                           protocol:protocol
+                    retainDelegates:NO
+                retainedByDelegates:NO
+                          onDealloc:nil];
+}
+
+
 +(id)proxyWithDelegates:(NSArray *)delegates
                protocol:(Protocol *)protocol
     retainedByDelegates:(BOOL)retainedByDelegates
