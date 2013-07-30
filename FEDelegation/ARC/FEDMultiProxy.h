@@ -13,7 +13,7 @@
 #error This code needs ARC. Use compiler option -fobjc-arc
 #endif
 
-#define fed_synthesize_multi_delegates(PROTOCOL)                                    \
+#define fed_synthesize_multi_delegates(PROTOCOL)                                         \
     fed_synthesize_multiproxy(PROTOCOL,addDelegate,removeDelegate,delegates)
 
 #define fed_synthesize_multiproxy(PROTOCOL,ADD,REMOVE,PROXY_GETTER)                      \
