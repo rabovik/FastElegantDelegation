@@ -58,7 +58,9 @@ Add `FastElegantDelegation ` to your _Podfile_. _(not ready yet)_
 ## Requirements
 * iOS 5.0+
 * ARC
-* MAObjcRuntime
+* [MAObjCRuntime][MAObjCRuntime]
 
 ## License
 MIT License.
+
+[MAObjCRuntime]: https://github.com/mikeash/MAObjCRuntime
