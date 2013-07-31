@@ -34,7 +34,8 @@
     }                                                                                    \
 }                                                                                        \
 -(id)GETTER{                                                                             \
-    [(FEDProxy *)_fed_##GETTER fed_realDelegate];                                        \
+    id strongRealDelegate = [(FEDProxy *)_fed_##GETTER fed_realDelegate];                \
+    if (!strongRealDelegate) return nil;                                                 \
     return _fed_##GETTER;                                                                \
 }
 
