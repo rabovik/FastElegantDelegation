@@ -138,6 +138,9 @@ fed_synthesize_multiproxy(MyClassListener, addListener, removeListener, listener
 @end
 ```
 
+#### Return values
+If a method returns a value the return value will be from the first delegate in the list that responds to the selector.
+
 ## Multiple delegates for a single third-party source
 
 `FEDMultiProxy` class is a `NSProxy` subclass that allows to add multiple delegates to a single third-party source.
