@@ -22,6 +22,7 @@
 -(void)methodWithFloat:(float)floatArg;
 -(NSString *)optionalNotImplementedMethodReturnsString;
 -(int)optionalNotImplementedMethodReturnsInt;
+-(BOOL)optionalNotImplementedMethodReturnsBOOL;
 @end
 
 @protocol FEDExampleProtocolWithNotExistentMethods <NSObject>
