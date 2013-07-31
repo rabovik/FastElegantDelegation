@@ -52,6 +52,9 @@
 +(id)proxyWithDelegate:(id)delegate
               protocol:(Protocol *)protocol
         retainDelegate:(BOOL)retainDelegate;
+
 -(id)fed_realDelegate;
+
+-(instancetype)fed_default:(id)defaultValue;
 
 @end

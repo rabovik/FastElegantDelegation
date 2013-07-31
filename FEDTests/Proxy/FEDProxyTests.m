@@ -102,6 +102,19 @@
                    respondsToSelector:@selector(optionalNotImplementedMethod)], @"");
 }
 
+#pragma mark - Defaults
+-(void)testDefaultString{
+    NSString *returnedString = [[self.strongProxy fed_default:@"ABC"]
+                                optionalNotImplementedMethodReturnsString];
+    STAssertTrue([@"ABC" isEqualToString:returnedString], @"%@",returnedString);
+}
+
+-(void)testDefaultInt{
+    int returnedInt = [[self.strongProxy fed_default:[NSNumber numberWithInt:13]]
+                                optionalNotImplementedMethodReturnsInt];
+    STAssertTrue(13 == returnedInt, @"%d",returnedInt);
+}
+
 #pragma mark - Weak references compatibility
 // see http://stackoverflow.com/questions/13800136/nsproxy-weak-reference-bug-under-arc-on-ios-5
 -(void)testWeakReferencesCompatibilityOnIOS5{

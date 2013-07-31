@@ -17,6 +17,12 @@
 #error This code needs ARC. Use compiler option -fobjc-arc
 #endif
 
+@interface FEDDefaultsProxy : FEDProxy
+-(void)fed_initWithWithDelegate:(id)delegate
+                       protocol:(Protocol *)protocol
+                   defaultValue:(id)defaultValue;
+@end
+
 #define FED_PROXY_IVARS                                                                  \
     __weak id _delegate;                                                                 \
     id _strongDelegate;                                                                  \
@@ -207,9 +213,83 @@
     return NO;
 }
 
+#pragma mark - Default values
+-(instancetype)fed_default:(id)defaultValue{
+    FEDDefaultsProxy *defaultsProxy = [FEDDefaultsProxy alloc];
+    [defaultsProxy fed_initWithWithDelegate:_delegate
+                                   protocol:_protocol
+                               defaultValue:defaultValue];
+    return defaultsProxy;
+}
+
+
 #pragma mark - Real delegate getter
 -(id)fed_realDelegate{
     return _delegate;
+}
+
+@end
+
+#pragma mark - DEFAULTS -
+
+@implementation FEDDefaultsProxy{
+    id _defaultValue;
+}
+
+-(void)fed_initWithWithDelegate:(id)delegate
+                       protocol:(Protocol *)protocol
+                   defaultValue:(id)defaultValue
+{
+    [self fed_initWithDelegate:delegate
+                      protocol:protocol
+                retainDelegate:NO
+            retainedByDelegate:NO
+                     onDealloc:nil];
+    _defaultValue = defaultValue;
+}
+
+-(void)forwardInvocation:(NSInvocation *)invocation{
+    if (!_defaultValue){
+        [super forwardInvocation:invocation];
+        return;
+    }
+    const char *returnType = invocation.methodSignature.methodReturnType;
+    BOOL voidReturnType = (0 == strncmp("v", returnType, 1));
+    if (voidReturnType) {
+        @throw [NSException
+                exceptionWithName:@"FEDProxyException"
+                reason:[NSString stringWithFormat:
+                        @"Can not use default value for void return type"]
+                userInfo:nil];
+    }
+    BOOL objectReturnType = (0 == strncmp("@", returnType, 1));
+    if (objectReturnType) {
+        [invocation setReturnValue:&_defaultValue];
+    }else{
+        if (![_defaultValue isKindOfClass:[NSValue class]]) {
+            @throw [NSException
+                    exceptionWithName:@"FEDProxyException"
+                    reason:[NSString stringWithFormat:
+                            @"Default value for return type %s should be kind of NSValue",
+                            returnType]
+                    userInfo:nil];
+        }
+        const char *defaultType = [(NSValue *)_defaultValue objCType];
+        BOOL typeMatche = (0 == strncmp(defaultType, returnType, strlen(defaultType)));
+        if (!typeMatche) {
+            @throw [NSException
+                    exceptionWithName:@"FEDProxyException"
+                    reason:[NSString stringWithFormat:
+                            @"Default value type %s and return type %s do not match",
+                            defaultType,
+                            returnType]
+                    userInfo:nil];
+        }
+        NSUInteger returnLength = invocation.methodSignature.methodReturnLength;
+        char buffer[returnLength];
+        [(NSValue *)_defaultValue getValue:buffer];
+        [invocation setReturnValue:&buffer];
+    }
 }
 
 @end
