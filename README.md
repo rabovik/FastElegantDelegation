@@ -92,8 +92,7 @@ If for some reason you need to declare delegate as strong, it is OK. `FEDProxy` 
 `FEDProxy` uses fast message forwarding (via `forwardingTargetForSelector:`) and a cache to prevent multiple internal `respondsToSelector:` checks.
 
 ## Multi-delegate pattern in your own code
-With `FEDMultiProxy` you may implement multi-delegate pattern in your own class so that the clients of your class 
-may easily add and remove delegates.
+With `fed_synthesize_multi_delegates` macro you may implement multi-delegate pattern in your own class so that the clients of your class may easily add and remove delegates.
 
 Example:
 ```objective-c
