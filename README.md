@@ -109,10 +109,6 @@ FEDMultiProxy *multiProxy = [FEDMultiProxy proxyWithDelegates:@[firstDelegate, s
 
 You do not need to keep a strong reference to `FEDMultiProxy` object. It is automatically retained by each delegate and will be deallocated when all delegates die. `onDealloc` block will be called at that moment and you may set targets delegate to `nil` there. 
 
-
-#### Lifetime management
-
-
 ## Multi-delegate pattern in your own code
 …
 
