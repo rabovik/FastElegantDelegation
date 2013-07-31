@@ -73,7 +73,7 @@
         id proxy = [NSProxy alloc];
         __weak id weakProxy = proxy;
         id strongProxy = weakProxy;
-        compatible = (nil != strongProxy);
+        compatible = (nil != weakProxy && nil != strongProxy);
     });
     return compatible;
 }
