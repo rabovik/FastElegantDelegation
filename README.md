@@ -99,14 +99,12 @@ For example, you may assign multiple delegates to a UIScrollView:
 
 ```objective-c
 __typeof(self) __weak weakSelf = self;
-FEDMultiProxy *multiProxy =
-    [FEDMultiProxy proxyWithDelegates:@[firstDelegate, secondDelegate]
-                             protocol:@protocol(UIScrollViewDelegate)
-                  retainedByDelegates:YES
-                            onDealloc:^{
-                                weakSelf.scrollView.delegate = nil;
-                            }];
-self.scrollView.delegate = multiProxy;
+FEDMultiProxy *multiProxy = [FEDMultiProxy proxyWithDelegates:@[firstDelegate, secondDelegate]
+                                                     protocol:@protocol(UIScrollViewDelegate)
+                                          retainedByDelegates:YES
+                                                    onDealloc:^{
+                                                        weakSelf.scrollView.delegate = nil;
+                                                    }];
 ```
 
 You do not need to keep a strong reference to `FEDMultiProxy` object. It is automatically retained by each delegate and will be deallocated when all delegates die. `onDealloc` block will be called at that moment and you may set targets delegate to `nil` there. 
