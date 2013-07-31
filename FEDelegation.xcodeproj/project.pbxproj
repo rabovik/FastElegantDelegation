@@ -26,6 +26,7 @@
 		1AE8CEC4171EA30900743023 /* RTProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AE8CEBC171EA30900743023 /* RTProperty.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		1AE8CEC5171EA30900743023 /* RTProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AE8CEBE171EA30900743023 /* RTProtocol.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		1AE8CEC6171EA30900743023 /* RTUnregisteredClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AE8CEC0171EA30900743023 /* RTUnregisteredClass.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		1AEB8CA117A9BA4200EDBFE7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AE8CE55171E8DD100743023 /* CoreGraphics.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -72,6 +73,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1AEB8CA117A9BA4200EDBFE7 /* CoreGraphics.framework in Frameworks */,
 				1AE8CE8C171E8E9400743023 /* SenTestingKit.framework in Frameworks */,
 				1AE8CE8D171E8E9400743023 /* UIKit.framework in Frameworks */,
 				1AE8CE8E171E8E9400743023 /* Foundation.framework in Frameworks */,

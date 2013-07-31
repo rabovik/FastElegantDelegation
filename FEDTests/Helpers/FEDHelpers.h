@@ -23,6 +23,7 @@
 -(NSString *)optionalNotImplementedMethodReturnsString;
 -(int)optionalNotImplementedMethodReturnsInt;
 -(BOOL)optionalNotImplementedMethodReturnsBOOL;
+-(CGRect)optionalNotImplementedMethodReturnsRect;
 @end
 
 @protocol FEDExampleProtocolWithNotExistentMethods <NSObject>

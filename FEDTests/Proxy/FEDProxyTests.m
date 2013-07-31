@@ -115,6 +115,14 @@
     STAssertTrue(13 == returnedInt, @"%d",returnedInt);
 }
 
+-(void)testDefaultRect{
+    CGRect defaultRect = CGRectMake(10.0, 20.0, 30.0, 40.1234);
+    CGRect rect = [[self.strongProxy
+                    fed_default:[NSValue value:&defaultRect withObjCType:@encode(CGRect)]]
+                   optionalNotImplementedMethodReturnsRect];
+    STAssertTrue(CGRectEqualToRect(defaultRect, rect), @"%@",NSStringFromCGRect(rect));
+}
+
 -(void)testDefaultBOOL{
     BOOL returnedBOOL = [[self.strongProxy fed_default:@YES]
                        optionalNotImplementedMethodReturnsBOOL];
