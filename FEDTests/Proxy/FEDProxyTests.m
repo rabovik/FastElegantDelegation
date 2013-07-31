@@ -115,6 +115,12 @@
     STAssertTrue(13 == returnedInt, @"%d",returnedInt);
 }
 
+-(void)testDefaultImplementedInt{
+    int returnedInt = [[self.strongProxy fed_default:[NSNumber numberWithInt:42]]
+                       requiredMethodReturns13];
+    STAssertTrue(13 == returnedInt, @"%d",returnedInt);
+}
+
 -(void)testDefaultRect{
     CGRect defaultRect = CGRectMake(10.0, 20.0, 30.0, 40.1234);
     CGRect rect = [[self.strongProxy
@@ -138,6 +144,14 @@
     BOOL returnedBOOL = [[proxy fed_default:@YES]
                          optionalNotImplementedMethodReturnsBOOL];
     STAssertTrue(returnedBOOL, @"");
+}
+
+-(void)testThrowsOnIncorrectDefaultCalls{
+    STAssertThrows([[self.strongProxy fed_default:@YES] parentOptionalMethod], @"");
+    STAssertThrows([[self.strongProxy fed_default:[NSObject new]]
+                    optionalNotImplementedMethodReturnsInt], @"");
+    STAssertThrows([[self.strongProxy fed_default:@YES]
+                    optionalNotImplementedMethodReturnsInt], @"");
 }
 
 #pragma mark - Weak references compatibility

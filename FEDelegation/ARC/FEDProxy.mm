@@ -275,7 +275,7 @@
                     userInfo:nil];
         }
         const char *defaultType = [(NSValue *)_defaultValue objCType];
-        BOOL typeMatche = (0 == strncmp(defaultType, returnType, strlen(defaultType)));
+        BOOL typeMatche = (0 == strcmp(defaultType, returnType));
         if (!typeMatche) {
             @throw [NSException
                     exceptionWithName:@"FEDProxyException"
