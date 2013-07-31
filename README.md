@@ -1,19 +1,30 @@
 
 # FastElegantDelegation
 
+© 2013 Yan Rabovik ([@rabovik][twitter] on twitter)
+
 Sorry, README is not fully ready yet. :(
 
 **FastElegantDelegation** solves 3 problems:
 
-1. Elegant single delegation without annoying `respondsToSelector:` checks;
-2. Assigning multiple delegates for a single third-party source;
-3. Implementing multi-delegate pattern in your own code.
-
+1. [Elegant single delegation][single] without annoying `respondsToSelector:` checks;
+2. Multiple delegates for a single third-party source;
+3. Multi-delegate pattern in your own code.
 
 ## Single delegation
 Delegation is often implemented like this:
 
 ```objective-c
+@protocol SomeDelegateProtocol <NSObject>
+@optional
+-(void)someOptionalDelegateMethod;
+// ...
+@end
+
+@interface MyClass : NSObject
+@property (nonatomic,weak) id<SomeDelegateProtocol> delegate;
+@end
+
 @implementation MyClass
 -(void)someMethod{
     if ([self.delegate respondsToSelector:@selector(someOptionalDelegateMethod)]) {
@@ -28,13 +39,59 @@ With **FastElegantDelegation** you may get rid of annoying `respondsToSelector:`
 
 ```objective-c
 @implementation MyClass
-fed_use_proxy_for_delegate
+fed_use_proxy_for_delegate // just add this macro
 -(void)someMethod{
     [self.delegate someOptionalDelegateMethod];
 }
 // ...
 @end
 ```
+
+#### How it works
+* `fed_use_proxy_for_delegate` macro synthesizes `delegate` and `setDelegate` methods;
+* `delegate` returns a `FEDProxy` class that forwards messages to the real delegate. If delegate does not respond to an optional protocol method, proxy just does nothing like when the message is sent to `nil`.
+
+#### Custom delegate names
+You may use any name you like for the delegate property, but you should specify getter and setter names in the macro:
+```objective-c
+@interface MyClass : NSObject
+@property (nonatomic,weak) id<SomeDelegateProtocol> myCoolDelegate;
+@end
+
+@implementation MyClass
+fed_use_proxy_for_property(myCoolDelegate,setMyCoolDelegate)
+// ...
+@end
+```
+
+#### Return values
+Delegate methods may return any value.
+```objective-c
+@implementation MyClass
+fed_use_proxy_for_delegate
+-(void)someMethod{
+    BOOL return = self.delegate ? [self.delegate methodReturningBOOL] : YES; // YES by default
+}
+// ...
+@end
+```
+
+#### Safeness
+If the property is declared as `weak` then delegate is not retained. When delegate deallocates, proxy is automatically deallocated too. You will never get into a situation when proxy returned by `self.delegate` is alive, but real delegate is already deallocated.
+
+`FEDProxy` does not break required/optional paradigm. If you try to call required method that is not implemented in the delegate, you'll get an exception.
+
+#### Strong delegates
+If for some reason you need to declare delegate as strong, it is OK. `FEDProxy` will be strongly stored in the ivar and will retain real delegate.
+
+```objective-c
+@interface MyClass : NSObject
+@property (nonatomic, strong) id<SomeDelegateProtocol> myStrongDelegate;
+@end
+``` 
+
+#### Performance
+`FEDProxy` uses fast message forwarding (via `forwardingTargetForSelector:`) and a cache to prevent multiple internal `respondsToSelector:` checks.
 
 ## Multiple delegates for a single third-party source
 …
@@ -53,4 +110,6 @@ Add `FastElegantDelegation ` to your _Podfile_. _(not ready yet)_
 ## License
 MIT License.
 
+[twitter]: https://twitter.com/rabovik
+[single]: #single-delegation
 [MAObjCRuntime]: https://github.com/mikeash/MAObjCRuntime
