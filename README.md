@@ -6,8 +6,8 @@
 **FastElegantDelegation** solves 3 problems:
 
 1. [Elegant single delegation][single] without annoying `respondsToSelector:` checks;
-2. [Multiple delegates for a single third-party source][multipleToSingle];
-3. [Multi-delegate pattern in your own code][multiDelegatePattern].
+2. Implementing [multi-delegate pattern in your own code][multiDelegatePattern];
+3. Assigning [multiple delegates for a single third-party source][multipleToSingle].
 
 ## Single delegation
 Delegation is often implemented like this:
@@ -91,6 +91,31 @@ If for some reason you need to declare delegate as strong, it is OK. `FEDProxy` 
 #### Performance
 `FEDProxy` uses fast message forwarding (via `forwardingTargetForSelector:`) and a cache to prevent multiple internal `respondsToSelector:` checks.
 
+## Multi-delegate pattern in your own code
+With `FEDMultiProxy` you may implement multi-delegate pattern in your own class so that the clients of your class 
+may easily add and remove delegates.
+
+Example:
+```objective-c
+@class MyClass;
+@protocol MyClassDelegate <NSObject>
+-(void)myClassDidStartSomeJob;
+@end
+
+@interface MyClass : NSObject
+-(void)addDelegate:(id<MyClassDelegate>)delegate;
+-(void)removeDelegate:(id<MyClassDelegate>)delegate;
+@end
+
+@implementation MyClass
+fed_synthesize_multi_delegates(MyClassDelegate)
+-(void)someJob{
+    [self.delegates myClassDidStartSomeJob]; // will be sent to each delegate
+}
+@end
+```
+`fed_synthesize_multi_delegates ` synthesizes `addDelegate:`, `removeDelegate:` and `delegates` methods.
+
 ## Multiple delegates for a single third-party source
 
 `FEDMultiProxy` class is a `NSProxy` subclass that allows to add multiple delegates to a single third-party source.
@@ -108,12 +133,6 @@ FEDMultiProxy *multiProxy = [FEDMultiProxy proxyWithDelegates:@[firstDelegate, s
 ```
 
 You do not need to keep a strong reference to `FEDMultiProxy` object. It is automatically retained by each delegate and will be deallocated when all delegates die. `onDealloc` block will be called at that moment and you may set targets delegate to `nil` there. 
-
-## Multi-delegate pattern in your own code
-…
-
-Sorry, this part of README is not ready yet. :(
-
 
 ## CocoaPods
 Add `FastElegantDelegation ` to your _Podfile_.
