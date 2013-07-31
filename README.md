@@ -116,6 +116,28 @@ fed_synthesize_multi_delegates(MyClassDelegate)
 ```
 `fed_synthesize_multi_delegates ` synthesizes `addDelegate:`, `removeDelegate:` and `delegates` methods.
 
+#### Custom method names
+You can name methods as you like. For example you may use `listener` name instead of `delegate`:
+
+```objective-c
+@class MyClass;
+@protocol MyClassListener <NSObject>
+-(void)myClassDidStartSomeJob;
+@end
+
+@interface MyClass : NSObject
+-(void)addListener:(id<MyClassListener>)delegate;
+-(void)removeListener:(id<MyClassListener>)delegate;
+@end
+
+@implementation MyClass
+fed_synthesize_multiproxy(MyClassListener, addListener, removeListener, listeners)
+-(void)someJob{
+    [self.listeners myClassDidStartSomeJob];
+}
+@end
+```
+
 ## Multiple delegates for a single third-party source
 
 `FEDMultiProxy` class is a `NSProxy` subclass that allows to add multiple delegates to a single third-party source.
