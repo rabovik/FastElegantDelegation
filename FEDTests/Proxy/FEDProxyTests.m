@@ -121,6 +121,17 @@
     STAssertTrue(returnedBOOL, @"");
 }
 
+-(void)testDefaultBOOLWhenDelegateDies{
+    id proxy;
+    @autoreleasepool {
+        proxy = [FEDProxy proxyWithDelegate:[FEDExampleDelegate new]
+                                   protocol:@protocol(FEDExampleProtocol)];
+    }
+    BOOL returnedBOOL = [[proxy fed_default:@YES]
+                         optionalNotImplementedMethodReturnsBOOL];
+    STAssertTrue(returnedBOOL, @"");
+}
+
 #pragma mark - Weak references compatibility
 // see http://stackoverflow.com/questions/13800136/nsproxy-weak-reference-bug-under-arc-on-ios-5
 -(void)testWeakReferencesCompatibilityOnIOS5{
