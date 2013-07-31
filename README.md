@@ -14,16 +14,6 @@ Sorry, README is not fully ready yet. :(
 Delegation is often implemented like this:
 
 ```objective-c
-@protocol SomeDelegateProtocol <NSObject>
-@optional
--(void)someOptionalDelegateMethod;
-// ...
-@end
-
-@interface MyClass : NSObject
-@property (nonatomic,weak) id<SomeDelegateProtocol> delegate;
-@end
-
 @implementation MyClass
 -(void)someMethod{
     if ([self.delegate respondsToSelector:@selector(someOptionalDelegateMethod)]) {
