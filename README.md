@@ -3,13 +3,11 @@
 
 © 2013 Yan Rabovik ([@rabovik][twitter] on twitter)
 
-Sorry, README is not fully ready yet. :(
-
 **FastElegantDelegation** solves 3 problems:
 
 1. [Elegant single delegation][single] without annoying `respondsToSelector:` checks;
-2. Multiple delegates for a single third-party source;
-3. Multi-delegate pattern in your own code.
+2. [Multiple delegates for a single third-party source][multipleToSingle];
+3. [Multi-delegate pattern in your own code][multiDelegatePattern].
 
 ## Single delegation
 Delegation is often implemented like this:
@@ -96,11 +94,17 @@ If for some reason you need to declare delegate as strong, it is OK. `FEDProxy` 
 ## Multiple delegates for a single third-party source
 …
 
+Sorry, this part of README is not ready yet. :(
+
+
 ## Multi-delegate pattern in your own code
 …
 
+Sorry, this part of README is not ready yet. :(
+
+
 ## CocoaPods
-Add `FastElegantDelegation ` to your _Podfile_. _(not ready yet)_
+Add `FastElegantDelegation ` to your _Podfile_.
 
 ## Requirements
 * iOS 5.0+
@@ -112,4 +116,6 @@ MIT License.
 
 [twitter]: https://twitter.com/rabovik
 [single]: #single-delegation
+[multipleToSingle]: #multiple-delegates-for-a-single-third-party-source
+[multiDelegatePattern]: #multi-delegate-pattern-in-your-own-code
 [MAObjCRuntime]: https://github.com/mikeash/MAObjCRuntime
