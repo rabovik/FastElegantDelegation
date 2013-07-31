@@ -92,9 +92,27 @@ If for some reason you need to declare delegate as strong, it is OK. `FEDProxy` 
 `FEDProxy` uses fast message forwarding (via `forwardingTargetForSelector:`) and a cache to prevent multiple internal `respondsToSelector:` checks.
 
 ## Multiple delegates for a single third-party source
-…
 
-Sorry, this part of README is not ready yet. :(
+`FEDMultiProxy` class is a `NSProxy` subclass that allows to add multiple delegates to a single third-party source.
+
+For example, you may assign multiple delegates to a UIScrollView:
+
+```objective-c
+__typeof(self) __weak weakSelf = self;
+FEDMultiProxy *multiProxy =
+    [FEDMultiProxy proxyWithDelegates:@[firstDelegate, secondDelegate]
+                             protocol:@protocol(UIScrollViewDelegate)
+                  retainedByDelegates:YES
+                            onDealloc:^{
+                                weakSelf.scrollView.delegate = nil;
+                            }];
+self.scrollView.delegate = multiProxy;
+```
+
+You do not need to keep a strong reference to `FEDMultiProxy` object. It is automatically retained by each delegate and will be deallocated when all delegates die. `onDealloc` block will be called at that moment and you may set targets delegate to `nil` there. 
+
+
+#### Lifetime management
 
 
 ## Multi-delegate pattern in your own code
