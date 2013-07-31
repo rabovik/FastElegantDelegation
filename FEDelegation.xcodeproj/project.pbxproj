@@ -420,6 +420,7 @@
 					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
 					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
 				);
+				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FEDTests/FEDTests-Prefix.pch";
 				INFOPLIST_FILE = "FEDTests/FEDTests-Info.plist";
