@@ -68,7 +68,7 @@ Delegate methods may return any value.
 @implementation MyClass
 fed_use_proxy_for_delegate
 -(void)someMethod{
-    BOOL return = self.delegate ? [self.delegate methodReturningBOOL] : YES; // YES by default
+    BOOL returnValue = [self.delegate methodReturningBOOL];
 }
 // ...
 @end
