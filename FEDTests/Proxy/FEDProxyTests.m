@@ -85,8 +85,9 @@
 }
 
 -(void)testNotImplementedMethods{
+    id __attribute__((objc_precise_lifetime)) delegate = [NSObject new];
     id proxy = [FEDProxy
-                proxyWithDelegate:[NSObject new]
+                proxyWithDelegate:delegate
                 protocol:@protocol(FEDExampleProtocolWithNotExistentMethods)];
     STAssertThrows([proxy requiredNotImplementedMethod], @"");
     STAssertNoThrow([proxy optionalNotImplementedMethod], @"");
