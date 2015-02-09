@@ -13,7 +13,6 @@ Pod::Spec.new do |s|
     arc.source_files = 'FEDelegation/ARC'
     arc.public_header_files = 'FEDelegation/ARC'
     arc.requires_arc = true
-    arc.dependency 'FastElegantDelegation/nonARC'
     arc.xcconfig = {
       'CLANG_CXX_LANGUAGE_STANDARD' => 'c++0x',
       'CLANG_CXX_LIBRARY' => 'libc++'
